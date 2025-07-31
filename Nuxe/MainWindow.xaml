@@ -5,8 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Nuxe"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        Title="{Binding TitleText}" d:Title="Nuxe 0.0.0" 
+        SizeToContent="Height" MinWidth="450" Width="800">
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo/>
+    </Window.TaskbarItemInfo>
+    <StackPanel Margin="6">
+        <Label>Executable Path</Label>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="TextBoxExePath" Grid.Column="0"
+                     d:Text="C:\Program Files (x86)\Steam\steamapps\common\ELDEN RING NIGHTREIGN\Game\nightreign.exe"/>
+            <Button x:Name="ButtonBrowse" Grid.Column="1">Browse</Button>
+            <Button x:Name="ButtonExplore" Grid.Column="2">Explore</Button>
+        </Grid>
 
-    </Grid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="ButtonUnpack">Unpack</Button>
+            <Button x:Name="ButtonPatch">Patch</Button>
+            <Button x:Name="ButtonRestore">Restore</Button>
+            <Button x:Name="ButtonAbort">Abort</Button>
+        </StackPanel>
+
+        <GroupBox Header="Status">
+            <StackPanel>
+                <TextBox x:Name="TextBoxStatus" IsReadOnly="True"/>
+                <ProgressBar x:Name="ProgressBar" d:Value="50"/>
+            </StackPanel>
+        </GroupBox>
+    </StackPanel>
 </Window>
