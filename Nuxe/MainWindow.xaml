@@ -12,29 +12,39 @@
         <TaskbarItemInfo/>
     </Window.TaskbarItemInfo>
     <StackPanel Margin="6">
-        <Label>Executable Path</Label>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBox x:Name="TextBoxExePath" Grid.Column="0"
-                     d:Text="C:\Program Files (x86)\Steam\steamapps\common\ELDEN RING NIGHTREIGN\Game\nightreign.exe"/>
-            <Button x:Name="ButtonBrowse" Grid.Column="1">Browse</Button>
-            <Button x:Name="ButtonExplore" Grid.Column="2">Explore</Button>
-        </Grid>
+        <GroupBox x:Name="GroupBoxControls">
+            <StackPanel>
+                <Label>Game Directory</Label>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="TextBoxGameDir" Grid.Column="0"
+                             d:Text="C:\Program Files (x86)\Steam\steamapps\common\ELDEN RING NIGHTREIGN\Game"/>
+                    <Button x:Name="ButtonBrowse" Grid.Column="1" Click="ButtonBrowse_Click">Browse</Button>
+                    <Button x:Name="ButtonExplore" Grid.Column="2" Click="ButtonExplore_Click">Explore</Button>
+                </Grid>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="ButtonUnpack">Unpack</Button>
-            <Button x:Name="ButtonPatch">Patch</Button>
-            <Button x:Name="ButtonRestore">Restore</Button>
-            <Button x:Name="ButtonAbort">Abort</Button>
-        </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="ButtonUnpack" Click="ButtonUnpack_Click">Unpack</Button>
+                    <Button x:Name="ButtonPatch" Click="ButtonPatch_Click">Patch</Button>
+                    <Button x:Name="ButtonRestore" Click="ButtonRestore_Click">Restore</Button>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
 
         <GroupBox Header="Status">
             <StackPanel>
-                <TextBox x:Name="TextBoxStatus" IsReadOnly="True"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="TextBoxStatus" Grid.Column="0" IsReadOnly="True"/>
+                    <Button x:Name="ButtonAbort" Grid.Column="1" Click="ButtonAbort_Click">Abort</Button>
+                </Grid>
                 <ProgressBar x:Name="ProgressBar" d:Value="50"/>
             </StackPanel>
         </GroupBox>
