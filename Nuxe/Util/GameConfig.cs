@@ -14,6 +14,8 @@ internal class GameConfig
     public BHD5.Bhd5Format BinderFormat { get; set; }
     public IReadOnlyList<Binder> Binders { get; set; }
 
+    public override string ToString() => Name;
+
     public class Binder
     {
         public string HeaderPath { get; set; }
@@ -29,7 +31,7 @@ internal class GameConfig
         {
             string json = File.ReadAllText(path);
             return JsonSerializer.Deserialize<GameConfig>(json);
-        }).ToArray();
+        }).OrderBy(config => config.Name).ToArray();
         return configs;
     }
 

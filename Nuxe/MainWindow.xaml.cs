@@ -1,8 +1,5 @@
-﻿using Microsoft.Win32;
-using System.Diagnostics;
-using System.IO;
+﻿using System.Diagnostics;
 using System.Media;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -13,10 +10,7 @@ namespace Nuxe;
 /// </summary>
 public partial class MainWindow : Window
 {
-    private static readonly string ResDir = Path.GetFullPath(Environment.GetEnvironmentVariable("NUXE_RES_DIR") ?? "res");
-    private static GameConfig[] GameConfigs { get; set; }
-
-    public static string TitleText => $"Nuxe {Assembly.GetExecutingAssembly().GetName().Version.ToString(3)}";
+    internal MainWindowState State { get; set; }
 
     private IProgress<OperationProgress> OperationProgress { get; }
     private CancellationTokenSource OperationCancellation { get; set; }
@@ -26,6 +20,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+
         OperationProgress = new Progress<OperationProgress>(r => LastProgress = r);
         LastProgress = new(0, "");
         ProgressTimer = new() { Interval = TimeSpan.FromSeconds(1.0 / 30) };
@@ -43,7 +38,8 @@ public partial class MainWindow : Window
     {
         try
         {
-            GameConfigs = GameConfig.LoadGameConfigs(ResDir);
+            State = new();
+            DataContext = State;
         }
         catch (Exception ex)
         {
@@ -55,27 +51,7 @@ public partial class MainWindow : Window
     private void Window_Closed(object sender, EventArgs e)
     {
         ProgressTimer.Stop();
-    }
-
-    private void ButtonBrowse_Click(object sender, RoutedEventArgs e)
-    {
-        var dialog = new OpenFolderDialog()
-        {
-            InitialDirectory = TextBoxGameDir.Text,
-            Title = "Select game directory",
-            ValidateNames = true,
-        };
-
-        bool? result = dialog.ShowDialog();
-        if (result.GetValueOrDefault(false))
-        {
-            TextBoxGameDir.Text = dialog.FolderName;
-        }
-    }
-
-    private void ButtonExplore_Click(object sender, RoutedEventArgs e)
-    {
-        Process.Start("explorer", TextBoxGameDir.Text);
+        State.Save();
     }
 
     private void ButtonAbort_Click(object sender, RoutedEventArgs e)
@@ -87,9 +63,9 @@ public partial class MainWindow : Window
     {
         try
         {
-            string gameDir = TextBoxGameDir.Text;
-            var gameConfig = GameConfig.DetectGameConfig(GameConfigs, gameDir);
-            var operation = new UnpackOperation(ResDir, gameDir, gameConfig);
+            string gameDir = State.GameDirectory;
+            var gameConfig = GameConfig.DetectGameConfig(State.GameConfigs, gameDir);
+            var operation = new UnpackOperation(State.ResDir, gameDir, gameConfig);
             await RunOperation(operation, "Unpacking");
         }
         catch (Exception ex)
@@ -102,8 +78,8 @@ public partial class MainWindow : Window
     {
         try
         {
-            string gameDir = TextBoxGameDir.Text;
-            var gameConfig = GameConfig.DetectGameConfig(GameConfigs, gameDir);
+            string gameDir = State.GameDirectory;
+            var gameConfig = GameConfig.DetectGameConfig(State.GameConfigs, gameDir);
             var operation = new PatchOperation(gameDir);
             await RunOperation(operation, "Patching");
         }
@@ -117,8 +93,8 @@ public partial class MainWindow : Window
     {
         try
         {
-            string gameDir = TextBoxGameDir.Text;
-            var gameConfig = GameConfig.DetectGameConfig(GameConfigs, gameDir);
+            string gameDir = State.GameDirectory;
+            var gameConfig = GameConfig.DetectGameConfig(State.GameConfigs, gameDir);
             var operation = new RestoreOperation(gameDir);
             await RunOperation(operation, "Restoration");
         }
@@ -135,7 +111,7 @@ public partial class MainWindow : Window
 
     private async Task RunOperation(Operation operation, string operationVerb)
     {
-        GroupBoxControls.IsEnabled = false;
+        TabControlSettings.IsEnabled = false;
         ButtonAbort.IsEnabled = true;
         try
         {
@@ -163,7 +139,7 @@ public partial class MainWindow : Window
             OperationProgress.Report(new(0, $"{operationVerb} failed."));
             DisplayError(ex);
         }
-        GroupBoxControls.IsEnabled = true;
+        TabControlSettings.IsEnabled = true;
         ButtonAbort.IsEnabled = false;
     }
 }

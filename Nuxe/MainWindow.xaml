@@ -3,37 +3,88 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Nuxe"
+        xmlns:local="clr-namespace:Nuxe" 
         mc:Ignorable="d"
-        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        d:DataContext="{d:DesignInstance Type=local:MainWindowState}"
         Title="{Binding TitleText}" d:Title="Nuxe 0.0.0" 
         SizeToContent="Height" MinWidth="450" Width="800" Closed="Window_Closed" Loaded="Window_Loaded">
     <Window.TaskbarItemInfo>
         <TaskbarItemInfo ProgressState="Normal"/>
     </Window.TaskbarItemInfo>
     <StackPanel Margin="6">
-        <GroupBox x:Name="GroupBoxControls">
-            <StackPanel>
-                <Label>Game Directory</Label>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBox x:Name="TextBoxGameDir" Grid.Column="0"
-                             d:Text="C:\Program Files (x86)\Steam\steamapps\common\ELDEN RING NIGHTREIGN\Game"/>
-                    <Button x:Name="ButtonBrowse" Grid.Column="1" Click="ButtonBrowse_Click">Browse</Button>
-                    <Button x:Name="ButtonExplore" Grid.Column="2" Click="ButtonExplore_Click">Explore</Button>
-                </Grid>
-
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button x:Name="ButtonUnpack" Click="ButtonUnpack_Click">Unpack</Button>
-                    <Button x:Name="ButtonPatch" Click="ButtonPatch_Click">Patch</Button>
-                    <Button x:Name="ButtonRestore" Click="ButtonRestore_Click">Restore</Button>
+        <TabControl x:Name="TabControlSettings">
+            <TabItem Header="Basic">
+                <StackPanel>
+                    <local:DirectoryInput Label="Game Directory" Prompt="Select game directory" Path="{Binding GameDirectory, Mode=TwoWay}"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Click="ButtonUnpack_Click">Unpack</Button>
+                        <Button Click="ButtonPatch_Click">Patch</Button>
+                        <Button Click="ButtonRestore_Click">Restore</Button>
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
-        </GroupBox>
+            </TabItem>
+
+            <TabItem Header="Advanced">
+                <TabControl Margin="-3 3 -3 -3">
+                    <TabItem Header="Unpack">
+                        <StackPanel>
+                            <local:DirectoryInput Label="Game Directory" Prompt="Select game directory" Path="{Binding GameDirectory, Mode=TwoWay}"/>
+                            <Label>Game Type</Label>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ComboBox Grid.Column="0" ItemsSource="{Binding GameConfigs}"/>
+                                <Button Grid.Column="1">Unpack</Button>
+                            </Grid>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Patch">
+                        <StackPanel>
+                            <local:DirectoryInput Label="Game Directory" Prompt="Select game directory"  Path="{Binding GameDirectory, Mode=TwoWay}"/>
+                            <Label>Game Type</Label>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ComboBox Grid.Column="0" ItemsSource="{Binding GameConfigs}"/>
+                                <Button Grid.Column="1">Patch</Button>
+                            </Grid>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Restore">
+                        <StackPanel>
+                            <local:DirectoryInput Label="Game Directory" Prompt="Select game directory"  Path="{Binding GameDirectory, Mode=TwoWay}"/>
+                            <Label>Game Type</Label>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ComboBox Grid.Column="0" ItemsSource="{Binding GameConfigs}"/>
+                                <Button Grid.Column="1">Restore</Button>
+                            </Grid>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Decrypt">
+                        <StackPanel>
+                            <local:DirectoryInput Label="Game Directory" Prompt="Select game directory"  Path="{Binding GameDirectory, Mode=TwoWay}"/>
+                            <Label>Game Type</Label>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ComboBox Grid.Column="0" ItemsSource="{Binding GameConfigs}"/>
+                                <Button Grid.Column="1">Decrypt</Button>
+                            </Grid>
+                        </StackPanel>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+        </TabControl>
 
         <GroupBox Header="Status">
             <StackPanel>
