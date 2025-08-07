@@ -1,0 +1,30 @@
+{
+    "Name": "Nightreign (PC)",
+    "ExpectedFiles": [
+        "nightreign.exe"
+    ],
+    "BinderKeysName": "EldenRingNightreign_PC",
+    "BinderFormat": "EldenRing",
+    "Binders": [
+        {
+            "HeaderPath": "data0.bhd",
+            "DataPath": "data0.bdt"
+        },
+        {
+            "HeaderPath": "data1.bhd",
+            "DataPath": "data1.bdt"
+        },
+        {
+            "HeaderPath": "data2.bhd",
+            "DataPath": "data2.bdt"
+        },
+        {
+            "HeaderPath": "data3.bhd",
+            "DataPath": "data3.bdt"
+        },
+        {
+            "HeaderPath": "sd/sd.bhd",
+            "DataPath": "sd/sd.bdt"
+        }
+    ]
+}

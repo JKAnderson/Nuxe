@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="{Binding TitleText}" d:Title="Nuxe 0.0.0" 
-        SizeToContent="Height" MinWidth="450" Width="800" Closed="Window_Closed">
+        SizeToContent="Height" MinWidth="450" Width="800" Closed="Window_Closed" Loaded="Window_Loaded">
     <Window.TaskbarItemInfo>
         <TaskbarItemInfo ProgressState="Normal"/>
     </Window.TaskbarItemInfo>

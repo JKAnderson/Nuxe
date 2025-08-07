@@ -1,0 +1,26 @@
+{
+    "Name": "Dark Souls (PC)",
+    "ExpectedFiles": [
+        "DARKSOULS.exe"
+    ],
+    "BinderKeysName": "DarkSouls_PC",
+    "BinderFormat": "DarkSouls",
+    "Binders": [
+        {
+            "HeaderPath": "dvdbnd0.bhd5",
+            "DataPath": "dvdbnd0.bdt"
+        },
+        {
+            "HeaderPath": "dvdbnd1.bhd5",
+            "DataPath": "dvdbnd1.bdt"
+        },
+        {
+            "HeaderPath": "dvdbnd2.bhd5",
+            "DataPath": "dvdbnd2.bdt"
+        },
+        {
+            "HeaderPath": "dvdbnd3.bhd5",
+            "DataPath": "dvdbnd3.bdt"
+        }
+    ]
+}

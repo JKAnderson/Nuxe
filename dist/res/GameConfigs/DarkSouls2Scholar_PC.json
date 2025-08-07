@@ -1,0 +1,31 @@
+{
+    "Name": "Dark Souls II Scholar of the First Sin (PC)",
+    "ExpectedFiles": [
+        "DarkSoulsII.exe",
+        "LqChrEbl.bhd"
+    ],
+    "BinderKeysName": "DarkSouls2Scholar_PC",
+    "BinderFormat": "DarkSouls2",
+    "Binders": [
+        {
+            "HeaderPath": "GameDataEbl.bhd",
+            "DataPath": "GameDataEbl.bdt"
+        },
+        {
+            "HeaderPath": "LqChrEbl.bhd",
+            "DataPath": "LqChrEbl.bdt"
+        },
+        {
+            "HeaderPath": "LqMapEbl.bhd",
+            "DataPath": "LqMapEbl.bdt"
+        },
+        {
+            "HeaderPath": "LqObjEbl.bhd",
+            "DataPath": "LqObjEbl.bdt"
+        },
+        {
+            "HeaderPath": "LqPartsEbl.bhd",
+            "DataPath": "LqPartsEbl.bdt"
+        }
+    ]
+}

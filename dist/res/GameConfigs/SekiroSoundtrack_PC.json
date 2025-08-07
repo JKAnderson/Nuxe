@@ -1,0 +1,14 @@
+{
+    "Name": "Sekiro Digital Artwork & Mini Soundtrack (PC)",
+    "ExpectedFiles": [
+        "DigitalArtwork_MiniSoundtrack.exe"
+    ],
+    "BinderKeysName": "SekiroSoundtrack_PC",
+    "BinderFormat": "DarkSouls3",
+    "Binders": [
+        {
+            "HeaderPath": "Data.bhd",
+            "DataPath": "Data.bdt"
+        }
+    ]
+}

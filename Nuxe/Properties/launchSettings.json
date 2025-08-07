@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Nuxe": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "NUXE_RES_DIR": "$(SolutionDir)dist/res"
+      }
+    }
+  }
+}

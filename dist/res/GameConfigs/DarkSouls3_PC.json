@@ -1,0 +1,40 @@
+{
+    "Name": "Dark Souls III (PC)",
+    "ExpectedFiles": [
+        "DarkSoulsIII.exe"
+    ],
+    "BinderKeysName": "DarkSouls3_PC",
+    "BinderFormat": "DarkSouls3",
+    "Binders": [
+        {
+            "HeaderPath": "Data1.bhd",
+            "DataPath": "Data1.bdt"
+        },
+        {
+            "HeaderPath": "Data2.bhd",
+            "DataPath": "Data2.bdt"
+        },
+        {
+            "HeaderPath": "Data3.bhd",
+            "DataPath": "Data3.bdt"
+        },
+        {
+            "HeaderPath": "Data4.bhd",
+            "DataPath": "Data4.bdt"
+        },
+        {
+            "HeaderPath": "Data5.bhd",
+            "DataPath": "Data5.bdt"
+        },
+        {
+            "HeaderPath": "DLC1.bhd",
+            "DataPath": "DLC1.bdt",
+            "Optional": true
+        },
+        {
+            "HeaderPath": "DLC2.bhd",
+            "DataPath": "DLC2.bdt",
+            "Optional": true
+        }
+    ]
+}

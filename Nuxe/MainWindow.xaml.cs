@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System.Diagnostics;
+using System.IO;
 using System.Media;
 using System.Reflection;
 using System.Windows;
@@ -12,6 +13,9 @@ namespace Nuxe;
 /// </summary>
 public partial class MainWindow : Window
 {
+    private static readonly string ResDir = Path.GetFullPath(Environment.GetEnvironmentVariable("NUXE_RES_DIR") ?? "res");
+    private static GameConfig[] GameConfigs { get; set; }
+
     public static string TitleText => $"Nuxe {Assembly.GetExecutingAssembly().GetName().Version.ToString(3)}";
 
     private IProgress<OperationProgress> OperationProgress { get; }
@@ -33,6 +37,19 @@ public partial class MainWindow : Window
             TaskbarItemInfo.ProgressValue = progress.Value;
         };
         ProgressTimer.Start();
+    }
+
+    private void Window_Loaded(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            GameConfigs = GameConfig.LoadGameConfigs(ResDir);
+        }
+        catch (Exception ex)
+        {
+            DisplayError(ex);
+            Close();
+        }
     }
 
     private void Window_Closed(object sender, EventArgs e)
@@ -66,6 +83,56 @@ public partial class MainWindow : Window
         OperationCancellation.Cancel();
     }
 
+    private async void ButtonUnpack_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            string gameDir = TextBoxGameDir.Text;
+            var gameConfig = GameConfig.DetectGameConfig(GameConfigs, gameDir);
+            var operation = new UnpackOperation(ResDir, gameDir, gameConfig);
+            await RunOperation(operation, "Unpacking");
+        }
+        catch (Exception ex)
+        {
+            DisplayError(ex);
+        }
+    }
+
+    private async void ButtonPatch_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            string gameDir = TextBoxGameDir.Text;
+            var gameConfig = GameConfig.DetectGameConfig(GameConfigs, gameDir);
+            var operation = new PatchOperation(gameDir);
+            await RunOperation(operation, "Patching");
+        }
+        catch (Exception ex)
+        {
+            DisplayError(ex);
+        }
+    }
+
+    private async void ButtonRestore_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            string gameDir = TextBoxGameDir.Text;
+            var gameConfig = GameConfig.DetectGameConfig(GameConfigs, gameDir);
+            var operation = new RestoreOperation(gameDir);
+            await RunOperation(operation, "Restoration");
+        }
+        catch (Exception ex)
+        {
+            DisplayError(ex);
+        }
+    }
+
+    private static void DisplayError(Exception ex)
+    {
+        MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+    }
+
     private async Task RunOperation(Operation operation, string operationVerb)
     {
         GroupBoxControls.IsEnabled = false;
@@ -80,7 +147,11 @@ public partial class MainWindow : Window
 
             sw.Stop();
             SystemSounds.Beep.Play();
-            OperationProgress.Report(new(1, $"{operationVerb} completed in {sw}!"));
+#if DEBUG
+            OperationProgress.Report(new(1, $"{operationVerb} completed in {sw.Elapsed:hh\\:mm\\:ss}!"));
+#else
+            OperationProgress.Report(new(1, $"{operationVerb} completed!"));
+#endif
         }
         catch (OperationCanceledException)
         {
@@ -90,27 +161,9 @@ public partial class MainWindow : Window
         {
             SystemSounds.Hand.Play();
             OperationProgress.Report(new(0, $"{operationVerb} failed."));
-            MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            DisplayError(ex);
         }
         GroupBoxControls.IsEnabled = true;
         ButtonAbort.IsEnabled = false;
-    }
-
-    private async void ButtonUnpack_Click(object sender, RoutedEventArgs e)
-    {
-        var operation = new UnpackOperation(TextBoxGameDir.Text);
-        await RunOperation(operation, "Unpacking");
-    }
-
-    private async void ButtonPatch_Click(object sender, RoutedEventArgs e)
-    {
-        var operation = new PatchOperation(TextBoxGameDir.Text);
-        await RunOperation(operation, "Patching");
-    }
-
-    private async void ButtonRestore_Click(object sender, RoutedEventArgs e)
-    {
-        var operation = new RestoreOperation(TextBoxGameDir.Text);
-        await RunOperation(operation, "Restoration");
     }
 }

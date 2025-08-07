@@ -1,0 +1,35 @@
+{
+    "Name": "Armored Core VI (PC)",
+    "ExpectedFiles": [
+        "armoredcore6.exe"
+    ],
+    "BinderKeysName": "ArmoredCore6_PC",
+    "BinderFormat": "EldenRing",
+    "Binders": [
+        {
+            "HeaderPath": "Data0.bhd",
+            "DataPath": "Data0.bdt"
+        },
+        {
+            "HeaderPath": "Data1.bhd",
+            "DataPath": "Data1.bdt"
+        },
+        {
+            "HeaderPath": "Data2.bhd",
+            "DataPath": "Data2.bdt"
+        },
+        {
+            "HeaderPath": "Data3.bhd",
+            "DataPath": "Data3.bdt"
+        },
+        {
+            "HeaderPath": "Debug.bhd",
+            "DataPath": "Debug.bdt",
+            "Optional": true
+        },
+        {
+            "HeaderPath": "sd/sd.bhd",
+            "DataPath": "sd/sd.bdt"
+        }
+    ]
+}

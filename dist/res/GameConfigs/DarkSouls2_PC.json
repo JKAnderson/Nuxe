@@ -1,0 +1,31 @@
+{
+    "Name": "Dark Souls II (PC)",
+    "ExpectedFiles": [
+        "DarkSoulsII.exe",
+        "HqChrEbl.bhd"
+    ],
+    "BinderKeysName": "DarkSouls2_PC",
+    "BinderFormat": "DarkSouls2",
+    "Binders": [
+        {
+            "HeaderPath": "GameDataEbl.bhd",
+            "DataPath": "GameDataEbl.bdt"
+        },
+        {
+            "HeaderPath": "HqChrEbl.bhd",
+            "DataPath": "HqChrEbl.bdt"
+        },
+        {
+            "HeaderPath": "HqMapEbl.bhd",
+            "DataPath": "HqMapEbl.bdt"
+        },
+        {
+            "HeaderPath": "HqObjEbl.bhd",
+            "DataPath": "HqObjEbl.bdt"
+        },
+        {
+            "HeaderPath": "HqPartsEbl.bhd",
+            "DataPath": "HqPartsEbl.bdt"
+        }
+    ]
+}
