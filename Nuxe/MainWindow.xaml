@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="{Binding TitleText}" d:Title="Nuxe 0.0.0" 
-        SizeToContent="Height" MinWidth="450" Width="800">
+        SizeToContent="Height" MinWidth="450" Width="800" Closed="Window_Closed">
     <Window.TaskbarItemInfo>
-        <TaskbarItemInfo/>
+        <TaskbarItemInfo ProgressState="Normal"/>
     </Window.TaskbarItemInfo>
     <StackPanel Margin="6">
         <GroupBox x:Name="GroupBoxControls">

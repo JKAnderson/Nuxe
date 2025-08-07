@@ -1,6 +1,6 @@
 ﻿namespace Nuxe;
 
-internal record OperationProgress(int Max, int Current, string Message);
+internal record OperationProgress(double Value, string Message);
 
 internal abstract class Operation
 {

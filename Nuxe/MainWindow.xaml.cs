@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Media;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace Nuxe;
 
@@ -15,16 +16,28 @@ public partial class MainWindow : Window
 
     private IProgress<OperationProgress> OperationProgress { get; }
     private CancellationTokenSource OperationCancellation { get; set; }
+    private OperationProgress LastProgress { get; set; }
+    private DispatcherTimer ProgressTimer { get; }
 
     public MainWindow()
     {
         InitializeComponent();
-        OperationProgress = new Progress<OperationProgress>(r =>
+        OperationProgress = new Progress<OperationProgress>(r => LastProgress = r);
+        LastProgress = new(0, "");
+        ProgressTimer = new() { Interval = TimeSpan.FromSeconds(1.0 / 30) };
+        ProgressTimer.Tick += (sender, e) =>
         {
-            ProgressBar.Maximum = r.Max;
-            ProgressBar.Value = r.Current;
-            TextBoxStatus.Text = r.Message;
-        });
+            var progress = LastProgress;
+            ProgressBar.Value = progress.Value * 100;
+            TextBoxStatus.Text = progress.Message;
+            TaskbarItemInfo.ProgressValue = progress.Value;
+        };
+        ProgressTimer.Start();
+    }
+
+    private void Window_Closed(object sender, EventArgs e)
+    {
+        ProgressTimer.Stop();
     }
 
     private void ButtonBrowse_Click(object sender, RoutedEventArgs e)
@@ -61,19 +74,22 @@ public partial class MainWindow : Window
         {
             using var ctSource = new CancellationTokenSource();
             OperationCancellation = ctSource;
+            var sw = new Stopwatch();
+            sw.Start();
             await Task.Run(() => operation.Run(OperationProgress, OperationCancellation.Token));
 
+            sw.Stop();
             SystemSounds.Beep.Play();
-            OperationProgress.Report(new(1, 1, $"{operationVerb} complete!"));
+            OperationProgress.Report(new(1, $"{operationVerb} completed in {sw}!"));
         }
         catch (OperationCanceledException)
         {
-            OperationProgress.Report(new(1, 0, $"{operationVerb} aborted."));
+            OperationProgress.Report(new(0, $"{operationVerb} aborted."));
         }
         catch (Exception ex)
         {
             SystemSounds.Hand.Play();
-            OperationProgress.Report(new(1, 0, $"{operationVerb} failed."));
+            OperationProgress.Report(new(0, $"{operationVerb} failed."));
             MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
         GroupBoxControls.IsEnabled = true;
