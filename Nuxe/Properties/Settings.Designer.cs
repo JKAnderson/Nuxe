@@ -38,12 +38,84 @@ namespace Nuxe.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string GameDirectory {
+        public string GameDir {
             get {
-                return ((string)(this["GameDirectory"]));
+                return ((string)(this["GameDir"]));
             }
             set {
-                this["GameDirectory"] = value;
+                this["GameDir"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UseUnpackDir {
+            get {
+                return ((bool)(this["UseUnpackDir"]));
+            }
+            set {
+                this["UseUnpackDir"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string UnpackDir {
+            get {
+                return ((string)(this["UnpackDir"]));
+            }
+            set {
+                this["UnpackDir"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ManualGame {
+            get {
+                return ((string)(this["ManualGame"]));
+            }
+            set {
+                this["ManualGame"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UseUnpackFilter {
+            get {
+                return ((bool)(this["UseUnpackFilter"]));
+            }
+            set {
+                this["UseUnpackFilter"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string UnpackFilter {
+            get {
+                return ((string)(this["UnpackFilter"]));
+            }
+            set {
+                this["UnpackFilter"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UnpackOverwrite {
+            get {
+                return ((bool)(this["UnpackOverwrite"]));
+            }
+            set {
+                this["UnpackOverwrite"] = value;
             }
         }
     }

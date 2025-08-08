@@ -25,20 +25,74 @@ internal class MainWindowState : INotifyPropertyChanged
             Settings.Upgraded = true;
         }
 
-        GameDirectory = Settings.GameDirectory;
+        GameDir = Settings.GameDir;
+        ManualGame = Array.Find(GameConfigs, config => config.BinderKeysName == Settings.ManualGame);
+        UseUnpackDir = Settings.UseUnpackDir;
+        UnpackDir = Settings.UnpackDir;
+        UseUnpackFilter = Settings.UseUnpackFilter;
+        UnpackFilter = Settings.UnpackFilter;
+        UnpackOverwrite = Settings.UnpackOverwrite;
     }
 
     public void Save()
     {
-        Settings.GameDirectory = GameDirectory;
+        Settings.GameDir = GameDir;
+        Settings.ManualGame = ManualGame?.BinderKeysName;
+        Settings.UseUnpackDir = UseUnpackDir;
+        Settings.UnpackDir = UnpackDir;
+        Settings.UseUnpackFilter = UseUnpackFilter;
+        Settings.UnpackFilter = UnpackFilter;
+        Settings.UnpackOverwrite = UnpackOverwrite;
         Settings.Save();
     }
 
     private string _gameDirectory;
-    public string GameDirectory
+    public string GameDir
     {
         get => _gameDirectory;
         set => ChangeProperty(ref _gameDirectory, value);
+    }
+
+    private GameConfig _manualGame;
+    public GameConfig ManualGame
+    {
+        get => _manualGame;
+        set => ChangeProperty(ref _manualGame, value);
+    }
+
+    private bool _useUnpackDir;
+    public bool UseUnpackDir
+    {
+        get => _useUnpackDir;
+        set => ChangeProperty(ref _useUnpackDir, value);
+    }
+
+    private string _unpackDir;
+    public string UnpackDir
+    {
+        get => _unpackDir;
+        set => ChangeProperty(ref _unpackDir, value);
+    }
+
+    private bool _useUnpackFilter;
+    public bool UseUnpackFilter
+    {
+        get => _useUnpackFilter;
+        set => ChangeProperty(ref _useUnpackFilter, value);
+    }
+
+    private string _unpackFilter;
+    public string UnpackFilter
+    {
+        get => _unpackFilter;
+        set => ChangeProperty(ref _unpackFilter, value);
+    }
+
+    private bool _unpackOverwrite;
+    public bool UnpackOverwrite
+    {
+        get => _unpackOverwrite;
+        set => ChangeProperty(ref _unpackOverwrite, value);
     }
 
     public event PropertyChangedEventHandler PropertyChanged;

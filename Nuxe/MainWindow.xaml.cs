@@ -59,13 +59,12 @@ public partial class MainWindow : Window
         OperationCancellation.Cancel();
     }
 
-    private async void ButtonUnpack_Click(object sender, RoutedEventArgs e)
+    private async void ButtonBasicUnpack_Click(object sender, RoutedEventArgs e)
     {
         try
         {
-            string gameDir = State.GameDirectory;
-            var gameConfig = GameConfig.DetectGameConfig(State.GameConfigs, gameDir);
-            var operation = new UnpackOperation(State.ResDir, gameDir, gameConfig);
+            var gameConfig = GameConfig.DetectGameConfig(State.GameConfigs, State.GameDir);
+            var operation = new UnpackOperation(State.ResDir, State.GameDir, gameConfig, null, null, false);
             await RunOperation(operation, "Unpacking");
         }
         catch (Exception ex)
@@ -74,11 +73,26 @@ public partial class MainWindow : Window
         }
     }
 
-    private async void ButtonPatch_Click(object sender, RoutedEventArgs e)
+    private async void ButtonAdvancedUnpack_Click(object sender, RoutedEventArgs e)
     {
         try
         {
-            string gameDir = State.GameDirectory;
+            string unpackDir = State.UseUnpackDir ? State.UnpackDir : null;
+            string unpackFilter = State.UseUnpackFilter ? State.UnpackFilter : null;
+            var operation = new UnpackOperation(State.ResDir, State.GameDir, State.ManualGame, unpackDir, unpackFilter, State.UnpackOverwrite);
+            await RunOperation(operation, "Unpacking");
+        }
+        catch (Exception ex)
+        {
+            DisplayError(ex);
+        }
+    }
+
+    private async void ButtonBasicPatch_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            string gameDir = State.GameDir;
             var gameConfig = GameConfig.DetectGameConfig(State.GameConfigs, gameDir);
             var operation = new PatchOperation(gameDir);
             await RunOperation(operation, "Patching");
@@ -89,11 +103,11 @@ public partial class MainWindow : Window
         }
     }
 
-    private async void ButtonRestore_Click(object sender, RoutedEventArgs e)
+    private async void ButtonBasicRestore_Click(object sender, RoutedEventArgs e)
     {
         try
         {
-            string gameDir = State.GameDirectory;
+            string gameDir = State.GameDir;
             var gameConfig = GameConfig.DetectGameConfig(State.GameConfigs, gameDir);
             var operation = new RestoreOperation(gameDir);
             await RunOperation(operation, "Restoration");
@@ -111,12 +125,14 @@ public partial class MainWindow : Window
 
     private async Task RunOperation(Operation operation, string operationVerb)
     {
+        // Keep this up here so it doesn't dispose before the Abort button is disabled
+        using var ctSource = new CancellationTokenSource();
+        OperationCancellation = ctSource;
+
         TabControlSettings.IsEnabled = false;
         ButtonAbort.IsEnabled = true;
         try
         {
-            using var ctSource = new CancellationTokenSource();
-            OperationCancellation = ctSource;
             var sw = new Stopwatch();
             sw.Start();
             await Task.Run(() => operation.Run(OperationProgress, OperationCancellation.Token));

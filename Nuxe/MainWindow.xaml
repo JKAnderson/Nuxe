@@ -15,11 +15,12 @@
         <TabControl x:Name="TabControlSettings">
             <TabItem Header="Basic">
                 <StackPanel>
-                    <local:DirectoryInput Label="Game Directory" Prompt="Select game directory" Path="{Binding GameDirectory, Mode=TwoWay}"/>
+                    <Label>Game Directory</Label>
+                    <local:DirectoryInput Prompt="Select game directory" Path="{Binding GameDir, Mode=TwoWay}"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button Click="ButtonUnpack_Click">Unpack</Button>
-                        <Button Click="ButtonPatch_Click">Patch</Button>
-                        <Button Click="ButtonRestore_Click">Restore</Button>
+                        <Button Click="ButtonBasicUnpack_Click">Unpack</Button>
+                        <Button Click="ButtonBasicPatch_Click">Patch</Button>
+                        <Button Click="ButtonBasicRestore_Click">Restore</Button>
                     </StackPanel>
                 </StackPanel>
             </TabItem>
@@ -28,21 +29,36 @@
                 <TabControl Margin="-3 3 -3 -3">
                     <TabItem Header="Unpack">
                         <StackPanel>
-                            <local:DirectoryInput Label="Game Directory" Prompt="Select game directory" Path="{Binding GameDirectory, Mode=TwoWay}"/>
-                            <Label>Game Type</Label>
+                            <Label>Game Directory</Label>
+                            <local:DirectoryInput Prompt="Select game directory" Path="{Binding GameDir, Mode=TwoWay}"/>
+
+                            <CheckBox IsChecked="{Binding UseUnpackDir}">Unpack to separate directory</CheckBox>
+                            <local:DirectoryInput IsEnabled="{Binding UseUnpackDir}" Prompt="Select unpack directory" Path="{Binding UnpackDir, Mode=TwoWay}"/>
+
+                            <CheckBox IsChecked="{Binding UseUnpackFilter}">Filter files (Regex)</CheckBox>
+                            <TextBox IsEnabled="{Binding UseUnpackFilter}" Text="{Binding UnpackFilter, Mode=TwoWay}"/>
+
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox IsChecked="{Binding UnpackOverwrite}">Overwrite existing files</CheckBox>
+                            </StackPanel>
+
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ComboBox Grid.Column="0" ItemsSource="{Binding GameConfigs}"/>
-                                <Button Grid.Column="1">Unpack</Button>
+                                <StackPanel>
+                                    <Label>Game Type</Label>
+                                    <ComboBox Grid.Column="0" ItemsSource="{Binding GameConfigs}" SelectedItem="{Binding ManualGame}"/>
+                                </StackPanel>
+                                <Button Grid.Column="1" VerticalAlignment="Bottom" Click="ButtonAdvancedUnpack_Click">Unpack</Button>
                             </Grid>
                         </StackPanel>
                     </TabItem>
                     <TabItem Header="Patch">
                         <StackPanel>
-                            <local:DirectoryInput Label="Game Directory" Prompt="Select game directory"  Path="{Binding GameDirectory, Mode=TwoWay}"/>
+                            <Label>Game Directory</Label>
+                            <local:DirectoryInput Prompt="Select game directory"  Path="{Binding GameDir, Mode=TwoWay}"/>
                             <Label>Game Type</Label>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -56,7 +72,8 @@
                     </TabItem>
                     <TabItem Header="Restore">
                         <StackPanel>
-                            <local:DirectoryInput Label="Game Directory" Prompt="Select game directory"  Path="{Binding GameDirectory, Mode=TwoWay}"/>
+                            <Label>Game Directory</Label>
+                            <local:DirectoryInput Prompt="Select game directory"  Path="{Binding GameDir, Mode=TwoWay}"/>
                             <Label>Game Type</Label>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -70,7 +87,8 @@
                     </TabItem>
                     <TabItem Header="Decrypt">
                         <StackPanel>
-                            <local:DirectoryInput Label="Game Directory" Prompt="Select game directory"  Path="{Binding GameDirectory, Mode=TwoWay}"/>
+                            <Label>Game Directory</Label>
+                            <local:DirectoryInput Prompt="Select game directory"  Path="{Binding GameDir, Mode=TwoWay}"/>
                             <Label>Game Type</Label>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -94,7 +112,7 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <TextBox x:Name="TextBoxStatus" Grid.Column="0" IsReadOnly="True"/>
-                    <Button x:Name="ButtonAbort" Grid.Column="1" Click="ButtonAbort_Click">Abort</Button>
+                    <Button x:Name="ButtonAbort" Grid.Column="1" IsEnabled="False" Click="ButtonAbort_Click">Abort</Button>
                 </Grid>
                 <ProgressBar x:Name="ProgressBar" d:Value="50"/>
             </StackPanel>

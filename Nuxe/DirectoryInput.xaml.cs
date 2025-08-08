@@ -10,13 +10,6 @@ namespace Nuxe;
 /// </summary>
 public partial class DirectoryInput : UserControl
 {
-    public string Label
-    {
-        get => (string)GetValue(LabelProperty);
-        set => SetValue(LabelProperty, value);
-    }
-    public static readonly DependencyProperty LabelProperty = DependencyProperty.Register(nameof(Label), typeof(string), typeof(DirectoryInput));
-
     public string Prompt
     {
         get => (string)GetValue(PromptProperty);

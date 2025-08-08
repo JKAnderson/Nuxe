@@ -1,6 +1,7 @@
 ﻿using Coremats;
 using System.IO;
 using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 
 namespace Nuxe;
 
@@ -8,19 +9,27 @@ internal class UnpackOperation : Operation
 {
     private string ResDir { get; set; }
     private string GameDir { get; set; }
-    private GameConfig GameConfig { get; set; }
+    private GameConfig GameConfig { get; }
+    private string UnpackDir { get; set; }
+    private string UnpackFilter { get; }
+    private bool UnpackOverwrite { get; }
 
-    public UnpackOperation(string resDir, string gameDir, GameConfig gameConfig)
+    public UnpackOperation(string resDir, string gameDir, GameConfig gameConfig, string unpackDir, string unpackFilter, bool unpackOverwrite)
     {
         ResDir = resDir;
         GameDir = gameDir;
         GameConfig = gameConfig;
+        UnpackDir = unpackDir;
+        UnpackFilter = unpackFilter;
+        UnpackOverwrite = unpackOverwrite;
     }
 
     protected override void Run()
     {
         Common.AssertDirExists(GameDir, "Game directory not found; please select a valid directory.");
         GameDir = Path.GetFullPath(GameDir);
+        if (UnpackDir != null)
+            UnpackDir = Path.GetFullPath(UnpackDir);
 
         var binders = ReadBinders("(Step 1/3) Loading headers");
 
@@ -51,6 +60,7 @@ internal class UnpackOperation : Operation
 
     private List<BinderFile> AuditFiles(List<BinderLight> binders)
     {
+        var filter = UnpackFilter == null ? null : new Regex(UnpackFilter);
         var files = new List<BinderFile>();
         foreach (var binder in binders)
         {
@@ -58,13 +68,17 @@ internal class UnpackOperation : Operation
             {
                 string binderDir = Path.GetDirectoryName(binder.Config.HeaderPath);
                 string gamePath = binder.Dict.GetValueOrDefault(headerFile.PathHash, null);
+
+                string unpackDir = UnpackDir ?? GameDir;
                 string unpackPath;
                 if (gamePath == null)
-                    unpackPath = Path.Combine(GameDir, "_unknown", $"{headerFile.PathHash:x16}");
+                    unpackPath = Path.Combine(unpackDir, "_unknown", $"{headerFile.PathHash:x16}");
                 else
-                    unpackPath = Path.Combine(GameDir, binderDir, gamePath.TrimStart('/'));
+                    unpackPath = Path.Combine(unpackDir, binderDir, gamePath.TrimStart('/'));
 
-                if (!File.Exists(unpackPath))
+                bool passedFilter = filter == null || gamePath != null && filter.IsMatch(gamePath);
+                bool passedOverwrite = UnpackOverwrite || !File.Exists(unpackPath);
+                if (passedFilter && passedOverwrite)
                     files.Add(new(binder.Config, headerFile, gamePath, unpackPath));
             }
         }
