@@ -61,69 +61,50 @@ public partial class MainWindow : Window
 
     private async void ButtonBasicUnpack_Click(object sender, RoutedEventArgs e)
     {
-        try
+        await RunOperation("Unpacking", () =>
         {
             var gameConfig = GameConfig.DetectGameConfig(State.GameConfigs, State.GameDir);
-            var operation = new UnpackOperation(State.ResDir, State.GameDir, gameConfig, null, null, false);
-            await RunOperation(operation, "Unpacking");
-        }
-        catch (Exception ex)
-        {
-            DisplayError(ex);
-        }
+            return new UnpackOperation(State.ResDir, State.GameDir, gameConfig, null, null, false);
+        });
     }
 
     private async void ButtonAdvancedUnpack_Click(object sender, RoutedEventArgs e)
     {
-        try
+        await RunOperation("Unpacking", () =>
         {
             string unpackDir = State.UseUnpackDir ? State.UnpackDir : null;
             string unpackFilter = State.UseUnpackFilter ? State.UnpackFilter : null;
-            var operation = new UnpackOperation(State.ResDir, State.GameDir, State.ManualGame, unpackDir, unpackFilter, State.UnpackOverwrite);
-            await RunOperation(operation, "Unpacking");
-        }
-        catch (Exception ex)
-        {
-            DisplayError(ex);
-        }
+            return new UnpackOperation(State.ResDir, State.GameDir, State.ManualGame, unpackDir, unpackFilter, State.UnpackOverwrite);
+        });
     }
 
     private async void ButtonBasicPatch_Click(object sender, RoutedEventArgs e)
     {
-        try
+        await RunOperation("Patching", () =>
         {
             string gameDir = State.GameDir;
             var gameConfig = GameConfig.DetectGameConfig(State.GameConfigs, gameDir);
-            var operation = new PatchOperation(gameDir);
-            await RunOperation(operation, "Patching");
-        }
-        catch (Exception ex)
-        {
-            DisplayError(ex);
-        }
+            return new PatchOperation(gameDir);
+        });
     }
 
     private async void ButtonBasicRestore_Click(object sender, RoutedEventArgs e)
     {
-        try
+        await RunOperation("Restoration", () =>
         {
             string gameDir = State.GameDir;
             var gameConfig = GameConfig.DetectGameConfig(State.GameConfigs, gameDir);
-            var operation = new RestoreOperation(gameDir);
-            await RunOperation(operation, "Restoration");
-        }
-        catch (Exception ex)
-        {
-            DisplayError(ex);
-        }
+            return new RestoreOperation(gameDir);
+        });
     }
 
     private static void DisplayError(Exception ex)
     {
+        SystemSounds.Hand.Play();
         MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
     }
 
-    private async Task RunOperation(Operation operation, string operationVerb)
+    private async Task RunOperation(string operationVerb, Func<Operation> createOperation)
     {
         // Keep this up here so it doesn't dispose before the Abort button is disabled
         using var ctSource = new CancellationTokenSource();
@@ -135,7 +116,8 @@ public partial class MainWindow : Window
         {
             var sw = new Stopwatch();
             sw.Start();
-            await Task.Run(() => operation.Run(OperationProgress, OperationCancellation.Token));
+
+            await Task.Run(() => createOperation().Run(OperationProgress, OperationCancellation.Token));
 
             sw.Stop();
             SystemSounds.Beep.Play();
@@ -151,7 +133,6 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            SystemSounds.Hand.Play();
             OperationProgress.Report(new(0, $"{operationVerb} failed."));
             DisplayError(ex);
         }
