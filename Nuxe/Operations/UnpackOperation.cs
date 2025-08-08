@@ -7,6 +7,10 @@ namespace Nuxe;
 
 internal class UnpackOperation : Operation
 {
+    private const long MB = 1024 * 1024;
+    // A completely arbitrary 10MB buffer because it just feels like a good idea somehow
+    private const long REQUIRED_SPACE_PADDING = MB * 10;
+
     private BinderKeysReader BinderKeys { get; }
     private string GameDir { get; }
     private GameConfig GameConfig { get; }
@@ -18,8 +22,7 @@ internal class UnpackOperation : Operation
     {
         Common.AssertDirExists(gameDir, "Game directory not found; please select a valid directory.");
         GameDir = Path.GetFullPath(gameDir);
-        if (unpackDir != null)
-            UnpackDir = Path.GetFullPath(unpackDir);
+        UnpackDir = unpackDir == null ? GameDir : Path.GetFullPath(unpackDir);
 
         string binderKeysDir = Path.Combine(resDir, "BinderKeys");
         BinderKeys = new(binderKeysDir, gameConfig.BinderKeysName);
@@ -56,6 +59,7 @@ internal class UnpackOperation : Operation
 
     private List<BinderFile> AuditFiles(string step, List<BinderLight> binders)
     {
+        long requiredSpace = 0;
         var files = new List<BinderFile>();
         for (int i = 0; i < binders.Count; i++)
         {
@@ -69,20 +73,39 @@ internal class UnpackOperation : Operation
                 string binderDir = Path.GetDirectoryName(binder.Config.HeaderPath);
                 string gamePath = binder.Dict.GetValueOrDefault(headerFile.PathHash, null);
 
-                string unpackDir = UnpackDir ?? GameDir;
                 string unpackPath;
                 if (gamePath == null)
-                    unpackPath = Path.Combine(unpackDir, "_unknown", $"{headerFile.PathHash:x16}");
+                    unpackPath = Path.Combine(UnpackDir, "_unknown", $"{headerFile.PathHash:x16}");
                 else
-                    unpackPath = Path.Combine(unpackDir, binderDir, gamePath.TrimStart('/'));
+                    unpackPath = Path.Combine(UnpackDir, binderDir, gamePath.TrimStart('/'));
 
                 bool passedFilter = UnpackFilter == null || gamePath != null && UnpackFilter.IsMatch(gamePath);
                 bool passedOverwrite = UnpackOverwrite || !File.Exists(unpackPath);
                 if (passedFilter && passedOverwrite)
+                {
                     files.Add(new(binder.Config, headerFile, gamePath, unpackPath));
+                    if (File.Exists(unpackPath))
+                        requiredSpace += headerFile.DataLength - new FileInfo(unpackPath).Length;
+                    else
+                        requiredSpace += headerFile.DataLength;
+                }
             }
         }
+
+        CheckFreeSpace(requiredSpace);
         return files;
+    }
+
+    private void CheckFreeSpace(long requiredSpace)
+    {
+        requiredSpace += REQUIRED_SPACE_PADDING;
+        long availableSpace = new DriveInfo(Path.GetPathRoot(UnpackDir)).AvailableFreeSpace;
+        if (availableSpace < requiredSpace)
+        {
+            double requiredGb = (double)requiredSpace / (MB * 1024);
+            double availableGb = (double)availableSpace / (MB * 1024);
+            throw new FriendlyException($"Not enough disk space to unpack files; {requiredGb:F2} GB required, {availableGb:F2} GB available.");
+        }
     }
 
     private void UnpackFiles(string step, List<BinderLight> binders, List<BinderFile> files)
