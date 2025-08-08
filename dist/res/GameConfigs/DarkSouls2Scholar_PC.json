@@ -6,6 +6,7 @@
     ],
     "BinderKeysName": "DarkSouls2Scholar_PC",
     "BinderFormat": "DarkSouls2",
+    "ExpectPems": true,
     "Binders": [
         {
             "HeaderPath": "GameDataEbl.bhd",

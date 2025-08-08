@@ -7,19 +7,34 @@ namespace Nuxe;
 
 internal class GameConfig
 {
+    [JsonRequired]
     public string Name { get; set; }
+
+    [JsonRequired]
     public HashSet<string> ExpectedFiles { get; set; }
+
+    [JsonRequired]
     public string BinderKeysName { get; set; }
+
+    [JsonRequired]
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public BHD5.Bhd5Format BinderFormat { get; set; }
+
+    public bool ExpectPems { get; set; }
+
+    [JsonRequired]
     public IReadOnlyList<Binder> Binders { get; set; }
 
     public override string ToString() => Name;
 
     public class Binder
     {
+        [JsonRequired]
         public string HeaderPath { get; set; }
+
+        [JsonRequired]
         public string DataPath { get; set; }
+
         public bool Optional { get; set; }
     }
 

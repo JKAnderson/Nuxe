@@ -30,10 +30,7 @@ internal class UnpackOperation : Operation
     protected override void Run()
     {
         var binders = ReadBinders("(Step 1/3) Loading headers");
-
-        Progress.Report(new(0, "(Step 2/3) Auditing files"));
-        var files = AuditFiles(binders);
-
+        var files = AuditFiles("(Step 2/3) Auditing files", binders);
         UnpackFiles("(Step 3/3) Unpacking files", binders, files);
     }
 
@@ -56,11 +53,16 @@ internal class UnpackOperation : Operation
         return binders;
     }
 
-    private List<BinderFile> AuditFiles(List<BinderLight> binders)
+    private List<BinderFile> AuditFiles(string step, List<BinderLight> binders)
     {
         var files = new List<BinderFile>();
-        foreach (var binder in binders)
+        for (int i = 0; i < binders.Count; i++)
         {
+            CancellationToken.ThrowIfCancellationRequested();
+            BinderLight binder = binders[i];
+            double progress = (double)i / binders.Count; i++;
+            Progress.Report(new(progress, $"{step} - (File {i}/{binders.Count}) {binder.Config.HeaderPath}"));
+
             foreach (var headerFile in binder.Header.Buckets.SelectMany(b => b))
             {
                 string binderDir = Path.GetDirectoryName(binder.Config.HeaderPath);
@@ -161,19 +163,11 @@ internal class UnpackOperation : Operation
             Config = binderConfig;
 
             string binderKeysDir = Path.GetFullPath(Path.Combine(resDir, "BinderKeys", config.BinderKeysName));
-            string binderName = Path.GetFileNameWithoutExtension(binderConfig.HeaderPath);
 
             string bhdPath = Path.Combine(gameDir, binderConfig.HeaderPath);
-            byte[] bytes = File.ReadAllBytes(bhdPath);
-            if (!BHD5.Is(bytes))
-            {
-                string keyPath = Path.Combine(binderKeysDir, "Key", binderName + ".pem");
-                Common.AssertFileExists(keyPath, "Encryption key not found; please ensure that you've fully extracted the program.");
-                string key = File.ReadAllText(keyPath);
-                bytes = Crypto.DecryptRsa(bytes, key);
-            }
-            Header = BHD5.Read(bytes, config.BinderFormat);
+            Header = Common.ReadBinderHeader(bhdPath, config.BinderFormat, binderKeysDir, config.ExpectPems);
 
+            string binderName = Path.GetFileNameWithoutExtension(binderConfig.HeaderPath);
             string dictPath = Path.Combine(binderKeysDir, "Hash", binderName + ".txt");
             Common.AssertFileExists(dictPath, "Hash dictionary not found; please ensure that you've fully extracted the program.");
             Dict = new HashDict(dictPath, config.BinderFormat);
