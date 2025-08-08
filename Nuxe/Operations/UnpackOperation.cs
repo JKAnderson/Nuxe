@@ -7,7 +7,7 @@ namespace Nuxe;
 
 internal class UnpackOperation : Operation
 {
-    private string ResDir { get; }
+    private BinderKeysReader BinderKeys { get; }
     private string GameDir { get; }
     private GameConfig GameConfig { get; }
     private string UnpackDir { get; }
@@ -21,7 +21,8 @@ internal class UnpackOperation : Operation
         if (unpackDir != null)
             UnpackDir = Path.GetFullPath(unpackDir);
 
-        ResDir = resDir;
+        string binderKeysDir = Path.Combine(resDir, "BinderKeys");
+        BinderKeys = new(binderKeysDir, gameConfig.BinderKeysName);
         GameConfig = gameConfig;
         UnpackFilter = unpackFilter == null ? null : new Regex(unpackFilter);
         UnpackOverwrite = unpackOverwrite;
@@ -48,7 +49,7 @@ internal class UnpackOperation : Operation
             if (!binderConfig.Optional)
                 Common.AssertFileExists(bhdPath, "Header file not found; please verify integrity for Steam games.");
             if (File.Exists(bhdPath))
-                binders.Add(new(ResDir, GameDir, GameConfig, binderConfig));
+                binders.Add(new(BinderKeys, GameDir, GameConfig, binderConfig));
         }
         return binders;
     }
@@ -158,19 +159,12 @@ internal class UnpackOperation : Operation
         public BHD5 Header { get; }
         public HashDict Dict { get; }
 
-        public BinderLight(string resDir, string gameDir, GameConfig config, GameConfig.Binder binderConfig)
+        public BinderLight(BinderKeysReader binderKeys, string gameDir, GameConfig config, GameConfig.Binder binderConfig)
         {
-            Config = binderConfig;
-
-            string binderKeysDir = Path.GetFullPath(Path.Combine(resDir, "BinderKeys", config.BinderKeysName));
-
             string bhdPath = Path.Combine(gameDir, binderConfig.HeaderPath);
-            Header = Common.ReadBinderHeader(bhdPath, config.BinderFormat, binderKeysDir, config.ExpectPems);
-
-            string binderName = Path.GetFileNameWithoutExtension(binderConfig.HeaderPath);
-            string dictPath = Path.Combine(binderKeysDir, "Hash", binderName + ".txt");
-            Common.AssertFileExists(dictPath, "Hash dictionary not found; please ensure that you've fully extracted the program.");
-            Dict = new HashDict(dictPath, config.BinderFormat);
+            Config = binderConfig;
+            Header = Common.ReadBinderHeader(bhdPath, config.BinderFormat, binderKeys, config.ExpectPems);
+            Dict = binderKeys.ReadDict(bhdPath, config.BinderFormat);
         }
     }
 

@@ -17,7 +17,7 @@ internal static class Common
             throw new FriendlyException($"{message}\nPath: \"{path}\"");
     }
 
-    public static BHD5 ReadBinderHeader(string bhdPath, BHD5.Bhd5Format bhdFormat, string binderKeysDir, bool expectPems)
+    public static BHD5 ReadBinderHeader(string bhdPath, BHD5.Bhd5Format bhdFormat, BinderKeysReader binderKeys, bool expectPems)
     {
         byte[] bytes = File.ReadAllBytes(bhdPath);
         if (!BHD5.Is(bytes))
@@ -33,10 +33,7 @@ internal static class Common
             }
             else
             {
-                string binderName = Path.GetFileNameWithoutExtension(bhdPath);
-                string keyPath = Path.Combine(binderKeysDir, "Key", binderName + ".pem");
-                AssertFileExists(keyPath, "Encryption key not found; please ensure that you've fully extracted the program.");
-                key = File.ReadAllText(keyPath);
+                key = binderKeys.ReadKey(bhdPath);
             }
             bytes = Crypto.DecryptRsa(bytes, key);
         }
