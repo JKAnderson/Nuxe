@@ -65,7 +65,7 @@ internal class UnpackOperation : Operation
         {
             CancellationToken.ThrowIfCancellationRequested();
             BinderLight binder = binders[i];
-            double progress = (double)i / binders.Count; i++;
+            double progress = (double)i / binders.Count;
             Progress.Report(new(progress, $"{step} - (File {i}/{binders.Count}) {binder.Config.HeaderPath}"));
 
             foreach (var headerFile in binder.Header.Buckets.SelectMany(b => b))
