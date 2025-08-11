@@ -50,7 +50,7 @@ internal class GameConfig
     {
         string configsDir = Path.Combine(resDir, "GameConfigs");
         Common.AssertDirExists(configsDir, "Game configs directory not found; please ensure that you've fully extracted the program files.");
-        var configs = Directory.GetFiles(configsDir, "*.json").Select(path =>
+        var configs = Directory.GetFiles(configsDir, "*.jsonc").Select(path =>
         {
             string json = File.ReadAllText(path);
             return JsonSerializer.Deserialize<GameConfig>(json, SerializerOptions);
