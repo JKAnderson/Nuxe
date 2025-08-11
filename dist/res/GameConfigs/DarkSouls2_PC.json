@@ -28,5 +28,30 @@
             "HeaderPath": "HqPartsEbl.bhd",
             "DataPath": "HqPartsEbl.bdt"
         }
+    ],
+    "BackupDirs": [
+        //"font",
+        //"movie",
+        //"NGWord",
+        "Param",
+        "sfx",
+        "sfx_hq",
+        //"shader",
+        "sound"
+    ],
+    "DeletePaths": [
+        "breakobj",
+        "decal",
+        "eventmakerex",
+        "ezstate",
+        "filter",
+        "map",
+        "material",
+        "menu",
+        "model",
+        "model_hq",
+        "morpheme4",
+        "prefabeditor",
+        "timeact"
     ]
 }

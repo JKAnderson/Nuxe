@@ -28,5 +28,30 @@
             "HeaderPath": "LqPartsEbl.bhd",
             "DataPath": "LqPartsEbl.bdt"
         }
+    ],
+    "BackupDirs": [
+        //"font",
+        //"movie",
+        //"NGWord",
+        "Param",
+        "sfx",
+        //"sfx_lq",
+        //"shader",
+        "sound"
+    ],
+    "DeletePaths": [
+        "breakobj",
+        "decal",
+        "ezstate",
+        "filter",
+        "map",
+        "material",
+        "menu",
+        "model",
+        "model_lq",
+        "morpheme4",
+        "prefabeditor",
+        "shader",
+        "timeact"
     ]
 }

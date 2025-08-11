@@ -61,8 +61,8 @@ public partial class MainWindow : Window
     {
         await RunOperation("Unpacking", () =>
         {
-            var gameConfig = GameConfig.DetectGameConfig(State.GameConfigs, State.GameDir);
             string gameDir = Path.GetDirectoryName(State.GameExe);
+            var gameConfig = GameConfig.DetectGameConfig(State.GameConfigs, gameDir);
             return new UnpackOperation(State.ResDir, gameDir, gameConfig, null, null, false);
         });
     }
@@ -83,7 +83,7 @@ public partial class MainWindow : Window
     {
         await RunOperation("Patching", () =>
         {
-            string gameDir = State.GameDir;
+            string gameDir = Path.GetDirectoryName(State.GameExe);
             var gameConfig = GameConfig.DetectGameConfig(State.GameConfigs, gameDir);
             return new PatchOperation(gameDir);
         });
@@ -93,9 +93,19 @@ public partial class MainWindow : Window
     {
         await RunOperation("Restoration", () =>
         {
-            string gameDir = State.GameDir;
+            string gameDir = Path.GetDirectoryName(State.GameExe);
             var gameConfig = GameConfig.DetectGameConfig(State.GameConfigs, gameDir);
-            return new RestoreOperation(gameDir);
+            return new RestoreOperation(gameDir, gameConfig);
+        });
+    }
+
+    private async void ButtonAdvancedRestore_Click(object sender, RoutedEventArgs e)
+    {
+        await RunOperation("Restoration", () =>
+        {
+            if (State.ManualGame == null)
+                throw new FriendlyException("Game type must be selected manually in advanced mode.");
+            return new RestoreOperation(State.GameDir, State.ManualGame);
         });
     }
 

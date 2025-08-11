@@ -32,7 +32,7 @@
                             <Label>Game Directory</Label>
                             <local:PathInput Mode="OpenFolder" Prompt="Select game directory" Path="{Binding GameDir, Mode=TwoWay}"/>
 
-                            <CheckBox IsChecked="{Binding UseUnpackDir}">Unpack to separate directory</CheckBox>
+                            <CheckBox IsChecked="{Binding UseUnpackDir}">Unpack to separate directory (disables backup)</CheckBox>
                             <local:PathInput IsEnabled="{Binding UseUnpackDir}" Mode="OpenFolder" Prompt="Select unpack directory" Path="{Binding UnpackDir, Mode=TwoWay}"/>
 
                             <CheckBox IsChecked="{Binding UseUnpackFilter}">Filter files (Regex)</CheckBox>
@@ -59,14 +59,17 @@
                         <StackPanel>
                             <Label>Game Executable</Label>
                             <local:PathInput Mode="OpenFile" Prompt="Select executable file" FileFilter="Executable file|*.bin;*.exe;*.xex" Path="{Binding GameExe, Mode=TwoWay}"/>
-                            <Label>Game Type</Label>
+                            
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ComboBox Grid.Column="0" ItemsSource="{Binding GameConfigs}"/>
-                                <Button Grid.Column="1">Patch</Button>
+                                <StackPanel>
+                                    <Label>Game Type</Label>
+                                    <ComboBox Grid.Column="0" ItemsSource="{Binding GameConfigs}" SelectedItem="{Binding ManualGame}"/>
+                                </StackPanel>
+                                <Button Grid.Column="1" VerticalAlignment="Bottom">Patch</Button>
                             </Grid>
                         </StackPanel>
                     </TabItem>
@@ -75,13 +78,17 @@
                             <Label>Game Directory</Label>
                             <local:PathInput Mode="OpenFolder" Prompt="Select game directory"  Path="{Binding GameDir, Mode=TwoWay}"/>
                             <Label>Game Type</Label>
+
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ComboBox Grid.Column="0" ItemsSource="{Binding GameConfigs}"/>
-                                <Button Grid.Column="1">Restore</Button>
+                                <StackPanel>
+                                    <Label>Game Type</Label>
+                                    <ComboBox Grid.Column="0" ItemsSource="{Binding GameConfigs}" SelectedItem="{Binding ManualGame}"/>
+                                </StackPanel>
+                                <Button Grid.Column="1" VerticalAlignment="Bottom" Click="ButtonAdvancedRestore_Click">Restore</Button>
                             </Grid>
                         </StackPanel>
                     </TabItem>
@@ -90,13 +97,17 @@
                             <Label>Game Directory</Label>
                             <local:PathInput Mode="OpenFolder" Prompt="Select game directory"  Path="{Binding GameDir, Mode=TwoWay}"/>
                             <Label>Game Type</Label>
+
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ComboBox Grid.Column="0" ItemsSource="{Binding GameConfigs}"/>
-                                <Button Grid.Column="1">Decrypt</Button>
+                                <StackPanel>
+                                    <Label>Game Type</Label>
+                                    <ComboBox Grid.Column="0" ItemsSource="{Binding GameConfigs}" SelectedItem="{Binding ManualGame}"/>
+                                </StackPanel>
+                                <Button Grid.Column="1" VerticalAlignment="Bottom">Decrypt</Button>
                             </Grid>
                         </StackPanel>
                     </TabItem>

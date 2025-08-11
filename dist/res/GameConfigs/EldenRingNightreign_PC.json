@@ -26,5 +26,28 @@
             "HeaderPath": "sd/sd.bhd",
             "DataPath": "sd/sd.bdt"
         }
+    ],
+    "BackupDirs": [
+        //"movie",
+        "sd"
+    ],
+    "DeletePaths": [
+        "action",
+        "asset",
+        "chr",
+        "cutscene",
+        "event",
+        "font",
+        "map",
+        "material",
+        "menu",
+        "msg",
+        "other",
+        "param",
+        "parts",
+        "script",
+        "sfx",
+        "shader",
+        "sound"
     ]
 }

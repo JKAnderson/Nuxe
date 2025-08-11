@@ -33,9 +33,10 @@ internal class UnpackOperation : Operation
 
     protected override void Run()
     {
-        var binders = ReadBinders("(Step 1/3) Loading headers");
-        var files = AuditFiles("(Step 2/3) Auditing files", binders);
-        UnpackFiles("(Step 3/3) Unpacking files", binders, files);
+        var binders = ReadBinders("(Step 1/4) Loading headers");
+        BackupDirs("(Step 2/4) Backing up files");
+        var files = AuditFiles("(Step 3/4) Auditing files", binders);
+        UnpackFiles("(Step 4/4) Unpacking files", binders, files);
     }
 
     private List<BinderLight> ReadBinders(string step)
@@ -55,6 +56,26 @@ internal class UnpackOperation : Operation
                 binders.Add(new(BinderKeys, GameDir, GameConfig, binderConfig));
         }
         return binders;
+    }
+
+    private void BackupDirs(string step)
+    {
+        if (UnpackDir != GameDir)
+            return;
+
+        string[] backupDirs = [.. GameConfig.BackupDirs];
+        for (int i = 0; i < backupDirs.Length; i++)
+        {
+            CancellationToken.ThrowIfCancellationRequested();
+            string backupDir = backupDirs[i];
+            double progress = (double)i / backupDirs.Length;
+            Progress.Report(new(progress, $"{step} - (Directory {i}/{backupDirs.Length}) {backupDir}"));
+
+            string backupSource = Path.Combine(GameDir, backupDir);
+            string backupTarget = Path.Combine(GameDir, "_backup", backupDir);
+            if (Directory.Exists(backupSource) && !Directory.Exists(backupTarget))
+                Microsoft.VisualBasic.FileIO.FileSystem.CopyDirectory(backupSource, backupTarget);
+        }
     }
 
     private List<BinderFile> AuditFiles(string step, List<BinderLight> binders)

@@ -31,5 +31,27 @@
             "HeaderPath": "sd/sd.bhd",
             "DataPath": "sd/sd.bdt"
         }
+    ],
+    "BackupDirs": [
+        //"movie", // Technically this should be included since these are also present in the bls, but they're completely identical and 11 GB is kind of a lot
+        "sd"
+    ],
+    "DeletePaths": [
+        "asset",
+        "chr",
+        "cutscene",
+        "event",
+        "font",
+        "map",
+        "material",
+        "menu",
+        "msg",
+        "other",
+        "param",
+        "parts",
+        "script",
+        "sfx",
+        "shader_d3d12",
+        "sound"
     ]
 }

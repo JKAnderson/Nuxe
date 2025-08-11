@@ -25,6 +25,12 @@ internal class GameConfig
     [JsonRequired]
     public IReadOnlyList<Binder> Binders { get; set; }
 
+    [JsonRequired]
+    public HashSet<string> BackupDirs { get; set; }
+
+    [JsonRequired]
+    public HashSet<string> DeletePaths { get; set; }
+
     public override string ToString() => Name;
 
     public class Binder
@@ -38,6 +44,8 @@ internal class GameConfig
         public bool Optional { get; set; }
     }
 
+    private static readonly JsonSerializerOptions SerializerOptions = new() { ReadCommentHandling = JsonCommentHandling.Skip };
+
     public static GameConfig[] LoadGameConfigs(string resDir)
     {
         string configsDir = Path.Combine(resDir, "GameConfigs");
@@ -45,7 +53,7 @@ internal class GameConfig
         var configs = Directory.GetFiles(configsDir, "*.json").Select(path =>
         {
             string json = File.ReadAllText(path);
-            return JsonSerializer.Deserialize<GameConfig>(json);
+            return JsonSerializer.Deserialize<GameConfig>(json, SerializerOptions);
         }).OrderBy(config => config.Name).ToArray();
         return configs;
     }

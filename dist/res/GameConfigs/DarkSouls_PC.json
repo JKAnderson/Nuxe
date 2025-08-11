@@ -22,5 +22,28 @@
             "HeaderPath": "dvdbnd3.bhd5",
             "DataPath": "dvdbnd3.bdt"
         }
+    ],
+    "BackupDirs": [
+        //"movWW"
+    ],
+    "DeletePaths": [
+        "chr",
+        "event",
+        "facegen",
+        "font",
+        "map",
+        "menu",
+        "msg",
+        "mtd",
+        "obj",
+        "other",
+        "param",
+        "paramdef",
+        "parts",
+        "remo",
+        "script",
+        "sfx",
+        "shader",
+        "sound"
     ]
 }

@@ -41,5 +41,32 @@
             "DataPath": "sd/sd_dlc02.bdt",
             "Optional": true
         }
+    ],
+    "BackupDirs": [
+        //"movie",
+        //"movie_dlc",
+        "sd"
+    ],
+    "DeletePaths": [
+        "action",
+        "asset",
+        "chr",
+        "cutscene",
+        "event",
+        "expression",
+        "facegen",
+        "font",
+        "map",
+        "material",
+        "menu",
+        "msg",
+        "mtd",
+        "other",
+        "param",
+        "parts",
+        "script",
+        "sfx",
+        "shader",
+        "sound"
     ]
 }

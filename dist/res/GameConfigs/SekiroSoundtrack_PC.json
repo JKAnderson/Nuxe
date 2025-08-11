@@ -10,5 +10,17 @@
             "HeaderPath": "Data.bhd",
             "DataPath": "Data.bdt"
         }
+    ],
+    "BackupDirs": [
+        "sound"
+    ],
+    "DeletePaths": [
+        "asset",
+        "export",
+        "font",
+        "menu",
+        "msg",
+        "param",
+        "shader"
     ]
 }

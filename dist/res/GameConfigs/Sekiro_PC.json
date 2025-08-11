@@ -26,5 +26,28 @@
             "HeaderPath": "Data5.bhd",
             "DataPath": "Data5.bdt"
         }
+    ],
+    "BackupDirs": [
+        //"movie",
+        "sound"
+    ],
+    "DeletePaths": [
+        "action",
+        "chr",
+        "cutscene",
+        "event",
+        "facegen",
+        "font",
+        "map",
+        "menu",
+        "msg",
+        "mtd",
+        "obj",
+        "other",
+        "param",
+        "parts",
+        "script",
+        "sfx",
+        "shader"
     ]
 }

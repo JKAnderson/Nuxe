@@ -36,5 +36,30 @@
             "DataPath": "DLC2.bdt",
             "Optional": true
         }
+    ],
+    "BackupDirs": [
+        //"movie",
+        "sound"
+    ],
+    "DeletePaths": [
+        "action",
+        "adhoc",
+        "chr",
+        "event",
+        "facegen",
+        "font",
+        "map",
+        "menu",
+        "msg",
+        "mtd",
+        "obj",
+        "other",
+        "param",
+        "parts",
+        "remo",
+        "script",
+        "sfx",
+        "shader",
+        "testdata"
     ]
 }
