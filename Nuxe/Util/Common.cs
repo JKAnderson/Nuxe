@@ -1,10 +1,18 @@
 ﻿using Coremats;
 using System.IO;
+using System.Media;
+using System.Windows;
 
 namespace Nuxe;
 
 internal static class Common
 {
+    public static void DisplayError(Exception ex)
+    {
+        SystemSounds.Hand.Play();
+        MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+    }
+
     public static void AssertDirExists(string dir, string message)
     {
         if (!Directory.Exists(dir))

@@ -1,13 +1,11 @@
 ﻿using System.Diagnostics;
+using System.IO;
 using System.Media;
 using System.Windows;
 using System.Windows.Threading;
 
 namespace Nuxe;
 
-/// <summary>
-/// Interaction logic for MainWindow.xaml
-/// </summary>
 public partial class MainWindow : Window
 {
     internal MainWindowState State { get; set; }
@@ -43,7 +41,7 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            DisplayError(ex);
+            Common.DisplayError(ex);
             Close();
         }
     }
@@ -64,7 +62,8 @@ public partial class MainWindow : Window
         await RunOperation("Unpacking", () =>
         {
             var gameConfig = GameConfig.DetectGameConfig(State.GameConfigs, State.GameDir);
-            return new UnpackOperation(State.ResDir, State.GameDir, gameConfig, null, null, false);
+            string gameDir = Path.GetDirectoryName(State.GameExe);
+            return new UnpackOperation(State.ResDir, gameDir, gameConfig, null, null, false);
         });
     }
 
@@ -72,6 +71,8 @@ public partial class MainWindow : Window
     {
         await RunOperation("Unpacking", () =>
         {
+            if (State.ManualGame == null)
+                throw new FriendlyException("Game type must be selected manually in advanced mode.");
             string unpackDir = State.UseUnpackDir ? State.UnpackDir : null;
             string unpackFilter = State.UseUnpackFilter ? State.UnpackFilter : null;
             return new UnpackOperation(State.ResDir, State.GameDir, State.ManualGame, unpackDir, unpackFilter, State.UnpackOverwrite);
@@ -96,12 +97,6 @@ public partial class MainWindow : Window
             var gameConfig = GameConfig.DetectGameConfig(State.GameConfigs, gameDir);
             return new RestoreOperation(gameDir);
         });
-    }
-
-    private static void DisplayError(Exception ex)
-    {
-        SystemSounds.Hand.Play();
-        MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
     }
 
     private async Task RunOperation(string operationVerb, Func<Operation> createOperation)
@@ -134,7 +129,7 @@ public partial class MainWindow : Window
         catch (Exception ex)
         {
             OperationProgress.Report(new(0, $"{operationVerb} failed."));
-            DisplayError(ex);
+            Common.DisplayError(ex);
         }
         TabControlSettings.IsEnabled = true;
         ButtonAbort.IsEnabled = false;

@@ -26,6 +26,7 @@ internal class MainWindowState : INotifyPropertyChanged
         }
 
         GameDir = Settings.GameDir;
+        GameExe = Settings.GameExe;
         ManualGame = Array.Find(GameConfigs, config => config.BinderKeysName == Settings.ManualGame);
         UseUnpackDir = Settings.UseUnpackDir;
         UnpackDir = Settings.UnpackDir;
@@ -37,6 +38,7 @@ internal class MainWindowState : INotifyPropertyChanged
     public void Save()
     {
         Settings.GameDir = GameDir;
+        Settings.GameExe = GameExe;
         Settings.ManualGame = ManualGame?.BinderKeysName;
         Settings.UseUnpackDir = UseUnpackDir;
         Settings.UnpackDir = UnpackDir;
@@ -46,11 +48,18 @@ internal class MainWindowState : INotifyPropertyChanged
         Settings.Save();
     }
 
-    private string _gameDirectory;
+    private string _gameDir;
     public string GameDir
     {
-        get => _gameDirectory;
-        set => ChangeProperty(ref _gameDirectory, value);
+        get => _gameDir;
+        set => ChangeProperty(ref _gameDir, value);
+    }
+
+    private string _gameExe;
+    public string GameExe
+    {
+        get => _gameExe;
+        set => ChangeProperty(ref _gameExe, value);
     }
 
     private GameConfig _manualGame;

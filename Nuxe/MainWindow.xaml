@@ -15,8 +15,8 @@
         <TabControl x:Name="TabControlSettings">
             <TabItem Header="Basic">
                 <StackPanel>
-                    <Label>Game Directory</Label>
-                    <local:DirectoryInput Prompt="Select game directory" Path="{Binding GameDir, Mode=TwoWay}"/>
+                    <Label>Game Executable</Label>
+                    <local:PathInput Mode="OpenFile" Prompt="Select game executable" FileFilter="Executable file|*.bin;*.exe;*.xex" Path="{Binding GameExe, Mode=TwoWay}"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button Click="ButtonBasicUnpack_Click">Unpack</Button>
                         <Button Click="ButtonBasicPatch_Click">Patch</Button>
@@ -30,10 +30,10 @@
                     <TabItem Header="Unpack">
                         <StackPanel>
                             <Label>Game Directory</Label>
-                            <local:DirectoryInput Prompt="Select game directory" Path="{Binding GameDir, Mode=TwoWay}"/>
+                            <local:PathInput Mode="OpenFolder" Prompt="Select game directory" Path="{Binding GameDir, Mode=TwoWay}"/>
 
                             <CheckBox IsChecked="{Binding UseUnpackDir}">Unpack to separate directory</CheckBox>
-                            <local:DirectoryInput IsEnabled="{Binding UseUnpackDir}" Prompt="Select unpack directory" Path="{Binding UnpackDir, Mode=TwoWay}"/>
+                            <local:PathInput IsEnabled="{Binding UseUnpackDir}" Mode="OpenFolder" Prompt="Select unpack directory" Path="{Binding UnpackDir, Mode=TwoWay}"/>
 
                             <CheckBox IsChecked="{Binding UseUnpackFilter}">Filter files (Regex)</CheckBox>
                             <TextBox IsEnabled="{Binding UseUnpackFilter}" Text="{Binding UnpackFilter, Mode=TwoWay}"/>
@@ -57,8 +57,8 @@
                     </TabItem>
                     <TabItem Header="Patch">
                         <StackPanel>
-                            <Label>Game Directory</Label>
-                            <local:DirectoryInput Prompt="Select game directory"  Path="{Binding GameDir, Mode=TwoWay}"/>
+                            <Label>Game Executable</Label>
+                            <local:PathInput Mode="OpenFile" Prompt="Select executable file" FileFilter="Executable file|*.bin;*.exe;*.xex" Path="{Binding GameExe, Mode=TwoWay}"/>
                             <Label>Game Type</Label>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -73,7 +73,7 @@
                     <TabItem Header="Restore">
                         <StackPanel>
                             <Label>Game Directory</Label>
-                            <local:DirectoryInput Prompt="Select game directory"  Path="{Binding GameDir, Mode=TwoWay}"/>
+                            <local:PathInput Mode="OpenFolder" Prompt="Select game directory"  Path="{Binding GameDir, Mode=TwoWay}"/>
                             <Label>Game Type</Label>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -88,7 +88,7 @@
                     <TabItem Header="Decrypt">
                         <StackPanel>
                             <Label>Game Directory</Label>
-                            <local:DirectoryInput Prompt="Select game directory"  Path="{Binding GameDir, Mode=TwoWay}"/>
+                            <local:PathInput Mode="OpenFolder" Prompt="Select game directory"  Path="{Binding GameDir, Mode=TwoWay}"/>
                             <Label>Game Type</Label>
                             <Grid>
                                 <Grid.ColumnDefinitions>
