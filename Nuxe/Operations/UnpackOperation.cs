@@ -17,8 +17,9 @@ internal class UnpackOperation : Operation
     private string UnpackDir { get; }
     private Regex UnpackFilter { get; }
     private bool UnpackOverwrite { get; }
+    private bool AllowMissingBinders { get; }
 
-    public UnpackOperation(string resDir, string gameDir, GameConfig gameConfig, string unpackDir, string unpackFilter, bool unpackOverwrite)
+    public UnpackOperation(string resDir, string gameDir, GameConfig gameConfig, string unpackDir, string unpackFilter, bool unpackOverwrite, bool allowMissingBinders)
     {
         Common.AssertDirExists(gameDir, "Game directory not found; please select a valid directory.");
         GameDir = Path.GetFullPath(gameDir);
@@ -29,6 +30,7 @@ internal class UnpackOperation : Operation
         GameConfig = gameConfig;
         UnpackFilter = unpackFilter == null ? null : new Regex(unpackFilter);
         UnpackOverwrite = unpackOverwrite;
+        AllowMissingBinders = allowMissingBinders;
     }
 
     protected override void Run()
@@ -50,7 +52,7 @@ internal class UnpackOperation : Operation
             Progress.Report(new(progress, $"{step} - (File {i}/{GameConfig.Binders.Count}) {binderConfig.HeaderPath}"));
 
             string bhdPath = Path.Combine(GameDir, binderConfig.HeaderPath);
-            if (!binderConfig.Optional)
+            if (!AllowMissingBinders && !binderConfig.Optional)
                 Common.AssertFileExists(bhdPath, "Header file not found; please verify integrity for Steam games.");
             if (File.Exists(bhdPath))
                 binders.Add(new(BinderKeys, GameDir, GameConfig, binderConfig));

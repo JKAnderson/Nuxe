@@ -63,7 +63,7 @@ public partial class MainWindow : Window
         {
             string gameDir = Path.GetDirectoryName(State.GameExe);
             var gameConfig = GameConfig.DetectGameConfig(State.GameConfigs, gameDir);
-            return new UnpackOperation(State.ResDir, gameDir, gameConfig, null, null, false);
+            return new UnpackOperation(State.ResDir, gameDir, gameConfig, null, null, false, false);
         });
     }
 
@@ -75,7 +75,7 @@ public partial class MainWindow : Window
                 throw new FriendlyException("Game type must be selected manually in advanced mode.");
             string unpackDir = State.UseUnpackDir ? State.UnpackDir : null;
             string unpackFilter = State.UseUnpackFilter ? State.UnpackFilter : null;
-            return new UnpackOperation(State.ResDir, State.GameDir, State.ManualGame, unpackDir, unpackFilter, State.UnpackOverwrite);
+            return new UnpackOperation(State.ResDir, State.GameDir, State.ManualGame, unpackDir, unpackFilter, State.UnpackOverwrite, true);
         });
     }
 
