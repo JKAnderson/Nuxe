@@ -1,0 +1,44 @@
+{
+    "Name": "Dark Souls (PS3)",
+    "ExpectedFiles": [
+        "EBOOT.BIN",
+        "dvdbnd.bhd5"
+    ],
+    "BinderKeysName": "DarkSouls_PS3",
+    "BinderFormat": "DarkSouls",
+    "Binders": [
+        {
+            "HeaderPath": "dvdbnd.bhd5",
+            "DataPath": "dvdbnd.bdt"
+        },
+        {
+            "HeaderPath": "patchbnd.bhd5",
+            "DataPath": "patchbnd.bdt",
+            "Optional": true
+        }
+    ],
+    "BackupDirs": [
+        //"moveu",
+        //"movjp",
+        //"script"
+    ],
+    "DeletePaths": [
+        "chr",
+        "event",
+        "facegen",
+        "font",
+        "map",
+        "menu",
+        "msg",
+        "mtd",
+        "obj",
+        "other",
+        "param",
+        "paramdef",
+        "parts",
+        "remo",
+        "sfx",
+        "shader",
+        "sound"
+    ]
+}

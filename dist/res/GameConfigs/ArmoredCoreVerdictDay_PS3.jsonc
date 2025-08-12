@@ -1,24 +1,25 @@
 {
-    "Name": "Armored Core V (X360)",
+    "Name": "Armored Core Verdict Day (PS3)",
     "ExpectedFiles": [
-        "default.xex",
-        "bind/dvdbnd5.bhd"
+        "EBOOT.BIN",
+        "bind/dvdbnd5_layer0.bhd"
     ],
-    "BinderKeysName": "ArmoredCore5_X360",
+    "BinderKeysName": "ArmoredCoreVerdictDay_PS3",
     "BinderFormat": "DarkSouls",
     "Binders": [
         {
-            "HeaderPath": "bind/dvdbnd5.bhd",
-            "DataPath": "bind/dvdbnd.bdt",
+            "HeaderPath": "bind/dvdbnd5_layer0.bhd",
+            "DataPath": "bind/dvdbnd_layer0.bdt",
             "UnpackDir": "."
         }
     ],
     "BackupDirs": [
         "bind"
+        //"license",
         //"movie"
     ],
     "DeletePaths": [
-        "custommap",
+        "airesource",
         "image",
         "lang",
         "material",

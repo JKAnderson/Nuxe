@@ -1,10 +1,10 @@
 {
-    "Name": "Armored Core V (X360)",
+    "Name": "Armored Core V (PS3)",
     "ExpectedFiles": [
-        "default.xex",
+        "EBOOT.BIN",
         "bind/dvdbnd5.bhd"
     ],
-    "BinderKeysName": "ArmoredCore5_X360",
+    "BinderKeysName": "ArmoredCore5_PS3",
     "BinderFormat": "DarkSouls",
     "Binders": [
         {
