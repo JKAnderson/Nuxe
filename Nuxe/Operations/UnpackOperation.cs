@@ -89,18 +89,22 @@ internal class UnpackOperation : Operation
             double progress = (double)i / binders.Count;
             Progress.Report(new(progress, $"{step} - (File {i}/{binders.Count}) {binder.Config.HeaderPath}"));
 
+            string binderName = Path.GetFileNameWithoutExtension(binder.Config.HeaderPath);
+            string binderDir = Path.GetDirectoryName(binder.Config.HeaderPath);
             foreach (var headerFile in binder.Header.Buckets.SelectMany(b => b))
             {
-                string binderDir = Path.GetDirectoryName(binder.Config.HeaderPath);
-                string gamePath = binder.Dict.GetValueOrDefault(headerFile.PathHash, null);
-
                 string unpackPath;
-                if (gamePath == null)
-                    unpackPath = Path.Combine(UnpackDir, "_unknown", $"{headerFile.PathHash:x16}");
-                else
+                if (binder.Dict.TryGetValue(headerFile.PathHash, out string gamePath))
+                {
                     unpackPath = Path.Combine(UnpackDir, binderDir, gamePath.TrimStart('/'));
+                }
+                else
+                {
+                    gamePath = Path.Combine("/_unknown", $"{binderName}_{headerFile.PathHash:x16}");
+                    unpackPath = Path.Combine(UnpackDir, gamePath.TrimStart('/'));
+                }
 
-                bool passedFilter = UnpackFilter == null || gamePath != null && UnpackFilter.IsMatch(gamePath);
+                bool passedFilter = UnpackFilter == null || UnpackFilter.IsMatch(gamePath);
                 bool passedOverwrite = UnpackOverwrite || !File.Exists(unpackPath);
                 if (passedFilter && passedOverwrite)
                 {
@@ -151,7 +155,7 @@ internal class UnpackOperation : Operation
                 CancellationToken.ThrowIfCancellationRequested();
                 BinderFile file = files[i];
                 double progress = (double)i / files.Count;
-                Progress.Report(new(progress, $"{step} - (File {i}/{files.Count}) {file.GamePath ?? $"{file.HeaderFile.PathHash:x16}"}"));
+                Progress.Report(new(progress, $"{step} - (File {i}/{files.Count}) {file.GamePath}"));
 
                 var span = ReadFile(file, bdtStreams, buffer);
                 string unpackDir = Path.GetDirectoryName(file.UnpackPath);
