@@ -63,10 +63,12 @@
         "mtd",
         "other",
         "param",
+        "paramdef",
         "parts",
         "script",
         "sfx",
         "shader",
-        "sound"
+        "sound",
+        "testdata"
     ]
 }

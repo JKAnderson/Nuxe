@@ -16,7 +16,7 @@
             <TabItem Header="Basic">
                 <StackPanel>
                     <Label>Game Executable</Label>
-                    <local:PathInput Mode="OpenFile" Prompt="Select game executable" FileFilter="Executable file|eboot.bin;*.exe;default.xex" Path="{Binding GameExe, Mode=TwoWay}"/>
+                    <local:PathInput Mode="OpenFile" Prompt="Select game executable" FileFilter="Executable file|*.exe;eboot.bin;default.xex;main" Path="{Binding GameExe, Mode=TwoWay}"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button Click="ButtonBasicUnpack_Click">Unpack</Button>
                         <Button Click="ButtonBasicPatch_Click">Patch</Button>

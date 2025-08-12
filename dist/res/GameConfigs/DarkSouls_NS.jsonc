@@ -1,0 +1,42 @@
+{
+    "Name": "Dark Souls Remastered (NS)",
+    "ExpectedFiles": [
+        "main"
+    ],
+    "BinderKeysName": "DarkSoulsRemastered_NS",
+    "BinderFormat": "DarkSoulsRemastered",
+    "Binders": [
+        {
+            "HeaderPath": "dvdbnd0.bhd5",
+            "DataPath": "dvdbnd0.bdt"
+        },
+        {
+            "HeaderPath": "dvdbnd1.bhd5",
+            "DataPath": "dvdbnd1.bdt"
+        }
+    ],
+    "BackupDirs": [
+        //"movjp",
+        //"movww"
+    ],
+    "DeletePaths": [
+        "chr",
+        "event",
+        "facegen",
+        "font",
+        "map",
+        "menu",
+        "msg",
+        "mtd",
+        "obj",
+        "other",
+        "param",
+        "paramdef",
+        "parts",
+        "remo",
+        "script",
+        "sfx",
+        "shader",
+        "sound"
+    ]
+}
