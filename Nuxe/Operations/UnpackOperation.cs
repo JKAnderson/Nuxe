@@ -90,13 +90,13 @@ internal class UnpackOperation : Operation
             Progress.Report(new(progress, $"{step} - (File {i}/{binders.Count}) {binder.Config.HeaderPath}"));
 
             string binderName = Path.GetFileNameWithoutExtension(binder.Config.HeaderPath);
-            string binderDir = Path.GetDirectoryName(binder.Config.HeaderPath);
+            string unpackDir = binder.Config.UnpackDir ?? Path.GetDirectoryName(binder.Config.HeaderPath);
             foreach (var headerFile in binder.Header.Buckets.SelectMany(b => b))
             {
                 string unpackPath;
                 if (binder.Dict.TryGetValue(headerFile.PathHash, out string gamePath))
                 {
-                    unpackPath = Path.Combine(UnpackDir, binderDir, gamePath.TrimStart('/'));
+                    unpackPath = Path.Combine(UnpackDir, unpackDir, gamePath.TrimStart('/'));
                 }
                 else
                 {

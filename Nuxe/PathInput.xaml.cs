@@ -129,7 +129,7 @@ public partial class PathInput : UserControl
         try
         {
             string dir = GetLastExistingDir(Path);
-            Process.Start("explorer.exe", dir);
+            Process.Start("explorer.exe", $"\"{dir}");
         }
         catch (Exception ex)
         {

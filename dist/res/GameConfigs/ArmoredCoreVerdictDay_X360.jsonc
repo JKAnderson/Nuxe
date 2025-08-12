@@ -1,0 +1,40 @@
+{
+    "Name": "Armored Core Verdict Day (X360)",
+    "ExpectedFiles": [
+        "default.xex",
+        "bind/dvdbnd5_layer0.bhd"
+    ],
+    "BinderKeysName": "ArmoredCoreVerdictDay_X360",
+    "BinderFormat": "DarkSouls",
+    "Binders": [
+        {
+            "HeaderPath": "bind/dvdbnd5_layer0.bhd",
+            "DataPath": "bind/dvdbnd_layer0.bdt",
+            "UnpackDir": "."
+        },
+        {
+            "HeaderPath": "bind/dvdbnd5_layer1.bhd",
+            "DataPath": "bind/dvdbnd_layer1.bdt",
+            "UnpackDir": "."
+        }
+    ],
+    "BackupDirs": [
+        "bind"
+        //"movie"
+    ],
+    "DeletePaths": [
+        "airesource",
+        "image",
+        "lang",
+        "material",
+        "menusfx",
+        "model",
+        "param",
+        "region",
+        "sfx",
+        "shader",
+        "sound",
+        "system",
+        "tae"
+    ]
+}

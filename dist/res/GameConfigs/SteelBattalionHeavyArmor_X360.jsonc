@@ -1,0 +1,47 @@
+{
+    "Name": "Steel Battalion Heavy Armor (X360)",
+    "ExpectedFiles": [
+        "default.xex",
+        "mdl_chr.bhd5"
+    ],
+    "BinderKeysName": "SteelBattalionHeavyArmor_X360",
+    "BinderFormat": "DarkSouls",
+    "Binders": [
+        {
+            "HeaderPath": "mdl_chr.bhd5",
+            "DataPath": "mdl_chr.bdt",
+            "UnpackDir": "mdl_chr"
+        },
+        {
+            "HeaderPath": "mdl_obj.bhd5",
+            "DataPath": "mdl_obj.bdt",
+            "UnpackDir": "mdl_obj"
+        },
+        {
+            "HeaderPath": "tex_high.bhd5",
+            "DataPath": "tex_high.bdt",
+            "UnpackDir": "tex_high"
+        },
+        {
+            "HeaderPath": "tex_low.bhd5",
+            "DataPath": "tex_low.bdt",
+            "UnpackDir": "tex_low"
+        }
+    ],
+    "BackupDirs": [
+        //"ai",
+        //"boot",
+        //"chract",
+        //"font",
+        //"kinect",
+        //"menu",
+        //"remo",
+        //"sound"
+    ],
+    "DeletePaths": [
+        "mdl_chr",
+        "mdl_obj",
+        "tex_high",
+        "tex_low"
+    ]
+}

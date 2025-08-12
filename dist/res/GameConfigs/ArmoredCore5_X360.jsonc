@@ -1,0 +1,35 @@
+{
+    "Name": "Armored Core V (X360)",
+    "ExpectedFiles": [
+        "default.xex",
+        "bind/dvdbnd5.bhd"
+    ],
+    "BinderKeysName": "ArmoredCore5_X360",
+    "BinderFormat": "DarkSouls",
+    "Binders": [
+        {
+            "HeaderPath": "bind/dvdbnd5.bhd",
+            "DataPath": "bind/dvdbnd.bdt",
+            "UnpackDir": "."
+        }
+    ],
+    "BackupDirs": [
+        "bind"
+        //"movie"
+    ],
+    "DeletePaths": [
+        "custommap",
+        "image",
+        "lang",
+        "material",
+        "menusfx",
+        "model",
+        "param",
+        "region",
+        "saveicon",
+        "sfx",
+        "sound",
+        "system",
+        "tae"
+    ]
+}

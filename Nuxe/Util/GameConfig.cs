@@ -41,6 +41,8 @@ internal class GameConfig
         [JsonRequired]
         public string DataPath { get; set; }
 
+        public string UnpackDir { get; set; }
+
         public bool Optional { get; set; }
     }
 

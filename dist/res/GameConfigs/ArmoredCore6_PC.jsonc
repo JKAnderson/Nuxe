@@ -52,6 +52,9 @@
         "script",
         "sfx",
         "shader_d3d12",
-        "sound"
+        "sound",
+        "game.properties",
+        "log.properties",
+        "system.properties"
     ]
 }

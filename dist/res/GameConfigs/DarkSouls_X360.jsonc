@@ -1,0 +1,53 @@
+{
+    "Name": "Dark Souls (X360)",
+    "ExpectedFiles": [
+        "default.xex",
+        "dvdbnd0.bhd5"
+    ],
+    "BinderKeysName": "DarkSouls_X360",
+    "BinderFormat": "DarkSouls",
+    "Binders": [
+        {
+            "HeaderPath": "dvdbnd0.bhd5",
+            "DataPath": "dvdbnd0.bdt"
+        },
+        {
+            "HeaderPath": "dvdbnd1.bhd5",
+            "DataPath": "dvdbnd1.bdt"
+        },
+        {
+            "HeaderPath": "patchbnd0.bhd5",
+            "DataPath": "patchbnd0.bdt",
+            "Optional": true
+        },
+        {
+            "HeaderPath": "patchbnd1.bhd5",
+            "DataPath": "patchbnd1.bdt",
+            "Optional": true
+        }
+    ],
+    "BackupDirs": [
+        //"moveu",
+        //"movna"
+    ],
+    "DeletePaths": [
+        "chr",
+        "event",
+        "facegen",
+        "font",
+        "map",
+        "menu",
+        "msg",
+        "mtd",
+        "obj",
+        "other",
+        "param",
+        "paramdef",
+        "parts",
+        "remo",
+        "script",
+        "sfx",
+        "shader",
+        "sound"
+    ]
+}
