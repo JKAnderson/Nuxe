@@ -1,7 +1,6 @@
 ﻿using Coremats;
 using System.IO;
 using System.Media;
-using System.Windows;
 
 namespace Nuxe;
 
@@ -10,7 +9,10 @@ internal static class Common
     public static void DisplayError(Exception ex)
     {
         SystemSounds.Hand.Play();
-        MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        if (ex is FriendlyException)
+            new ErrorWindow(ex.Message, ex.InnerException?.ToString()).ShowDialog();
+        else
+            new ErrorWindow("An unexpected error occurred.", ex.ToString()).ShowDialog();
     }
 
     public static void AssertDirExists(string dir, string message)

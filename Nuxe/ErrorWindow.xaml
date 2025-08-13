@@ -1,0 +1,14 @@
+﻿<Window x:Class="Nuxe.ErrorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Nuxe"
+        mc:Ignorable="d"
+        MinWidth="450" MinHeight="100" SizeToContent="WidthAndHeight" WindowStyle="ToolWindow" ResizeMode="NoResize">
+    <StackPanel Margin="10">
+        <TextBox x:Name="TextBoxMessage" IsReadOnly="True" Height="Auto" BorderThickness="0" d:Text="Error message goes here!"/>
+        <TextBox x:Name="TextBoxDetails" IsReadOnly="True" MinHeight="100" Height="Auto" MaxHeight="400" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" d:Text="Error details go here!"/>
+        <Button Margin="10 10 10 0" Click="Button_Click">OK</Button>
+    </StackPanel>
+</Window>
