@@ -53,5 +53,12 @@
         "prefabeditor",
         "shader",
         "timeact"
+    ],
+    "PatchAliases": [
+        "chrlq",
+        "gamedata",
+        "maplq",
+        "objlq",
+        "partslq"
     ]
 }

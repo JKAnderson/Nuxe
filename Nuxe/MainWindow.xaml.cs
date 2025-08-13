@@ -85,7 +85,18 @@ public partial class MainWindow : Window
         {
             string gameDir = Path.GetDirectoryName(State.GameExe);
             var gameConfig = GameConfig.DetectGameConfig(State.GameConfigs, gameDir);
-            return new PatchOperation(gameDir);
+            return new PatchOperation(State.GameExe, gameConfig, null);
+        });
+    }
+
+    private async void ButtonAdvancedPatch_Click(object sender, RoutedEventArgs e)
+    {
+        await RunOperation("Patching", () =>
+        {
+            string gameDir = Path.GetDirectoryName(State.GameExe);
+            var gameConfig = GameConfig.DetectGameConfig(State.GameConfigs, gameDir);
+            string outputPath = State.UsePatchOutputPath ? State.PatchOutputPath : null;
+            return new PatchOperation(State.GameExe, gameConfig, outputPath);
         });
     }
 

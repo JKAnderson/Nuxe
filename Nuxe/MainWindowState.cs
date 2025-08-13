@@ -33,6 +33,8 @@ internal class MainWindowState : INotifyPropertyChanged
         UseUnpackFilter = Settings.UseUnpackFilter;
         UnpackFilter = Settings.UnpackFilter;
         UnpackOverwrite = Settings.UnpackOverwrite;
+        UsePatchOutputPath = Settings.UsePatchOutputPath;
+        PatchOutputPath = Settings.PatchOutputPath;
     }
 
     public void Save()
@@ -45,6 +47,8 @@ internal class MainWindowState : INotifyPropertyChanged
         Settings.UseUnpackFilter = UseUnpackFilter;
         Settings.UnpackFilter = UnpackFilter;
         Settings.UnpackOverwrite = UnpackOverwrite;
+        Settings.UsePatchOutputPath = UsePatchOutputPath;
+        Settings.PatchOutputPath = PatchOutputPath;
         Settings.Save();
     }
 
@@ -102,6 +106,20 @@ internal class MainWindowState : INotifyPropertyChanged
     {
         get => _unpackOverwrite;
         set => ChangeProperty(ref _unpackOverwrite, value);
+    }
+
+    private bool _usePatchOutputPath;
+    public bool UsePatchOutputPath
+    {
+        get => _usePatchOutputPath;
+        set => ChangeProperty(ref _usePatchOutputPath, value);
+    }
+
+    private string _patchOutputPath;
+    public string PatchOutputPath
+    {
+        get => _patchOutputPath;
+        set => ChangeProperty(ref _patchOutputPath, value);
     }
 
     public event PropertyChangedEventHandler PropertyChanged;

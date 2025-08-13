@@ -61,5 +61,14 @@
         "sfx",
         "shader",
         "testdata"
+    ],
+    "PatchAliases": [
+        "data1",
+        "data2",
+        "data3",
+        "data4",
+        "data5",
+        "dlc1",
+        "dlc2"
     ]
 }

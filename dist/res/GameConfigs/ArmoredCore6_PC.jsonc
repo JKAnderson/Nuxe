@@ -59,5 +59,11 @@
         "game.properties",
         "log.properties",
         "system.properties"
+    ],
+    "PatchAliases": [
+        "data0",
+        "data1",
+        "data2",
+        "data3"
     ]
 }

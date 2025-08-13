@@ -130,5 +130,29 @@ namespace Nuxe.Properties {
                 this["GameExe"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PatchOutputPath {
+            get {
+                return ((string)(this["PatchOutputPath"]));
+            }
+            set {
+                this["PatchOutputPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UsePatchOutputPath {
+            get {
+                return ((bool)(this["UsePatchOutputPath"]));
+            }
+            set {
+                this["UsePatchOutputPath"] = value;
+            }
+        }
     }
 }

@@ -58,7 +58,10 @@
                     <TabItem Header="Patch">
                         <StackPanel>
                             <Label>Game Executable</Label>
-                            <local:PathInput Mode="OpenFile" Prompt="Select executable file" FileFilter="Executable file|*.bin;*.exe;*.xex" Path="{Binding GameExe, Mode=TwoWay}"/>
+                            <local:PathInput Mode="OpenFile" Prompt="Select executable file" Path="{Binding GameExe, Mode=TwoWay}"/>
+                            
+                            <CheckBox IsChecked="{Binding UsePatchOutputPath}">Save to separate file (disables backup)</CheckBox>
+                            <local:PathInput Mode="SaveFile" Prompt="Save patched file as..." Path="{Binding PatchOutputPath, Mode=TwoWay}"/>
                             
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -69,7 +72,7 @@
                                     <Label>Game Type</Label>
                                     <ComboBox Grid.Column="0" ItemsSource="{Binding GameConfigs}" SelectedItem="{Binding ManualGame}"/>
                                 </StackPanel>
-                                <Button Grid.Column="1" VerticalAlignment="Bottom">Patch</Button>
+                                <Button Grid.Column="1" VerticalAlignment="Bottom" Click="ButtonAdvancedPatch_Click">Patch</Button>
                             </Grid>
                         </StackPanel>
                     </TabItem>

@@ -22,5 +22,8 @@
         "msg",
         "param",
         "shader"
+    ],
+    "PatchAliases": [
+        "data"
     ]
 }

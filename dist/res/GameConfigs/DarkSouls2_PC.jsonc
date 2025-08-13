@@ -53,5 +53,12 @@
         "morpheme4",
         "prefabeditor",
         "timeact"
+    ],
+    "PatchAliases": [
+        "chrhq",
+        "gamedata",
+        "maphq",
+        "objhq",
+        "partshq"
     ]
 }

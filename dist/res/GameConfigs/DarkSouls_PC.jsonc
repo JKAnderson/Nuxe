@@ -45,5 +45,11 @@
         "sfx",
         "shader",
         "sound"
+    ],
+    "PatchAliases": [
+        "dvdbnd0",
+        "dvdbnd1",
+        "dvdbnd2",
+        "dvdbnd3"
     ]
 }

@@ -31,6 +31,8 @@ internal class GameConfig
     [JsonRequired]
     public HashSet<string> DeletePaths { get; set; }
 
+    public HashSet<string> PatchAliases { get; set; }
+
     public override string ToString() => Name;
 
     public class Binder
