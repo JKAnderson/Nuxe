@@ -25,26 +25,29 @@ internal static class Common
             throw new FriendlyException($"{message}\nPath: \"{path}\"");
     }
 
+    public static byte[] DecryptBinderHeader(string bhdPath, BinderKeysReader binderKeys, bool expectPems, byte[] bytes)
+    {
+        string key;
+        if (expectPems)
+        {
+            string dir = Path.GetDirectoryName(bhdPath);
+            string keyFile = Path.GetFileName(bhdPath).Replace("Ebl.bhd", "KeyCode.pem");
+            string keyPath = Path.Combine(dir, keyFile);
+            AssertFileExists(keyPath, "Encryption key not found; please verify integrity for Steam games.");
+            key = File.ReadAllText(keyPath);
+        }
+        else
+        {
+            key = binderKeys.ReadKey(bhdPath);
+        }
+        return Crypto.DecryptRsa(bytes, key);
+    }
+
     public static BHD5 ReadBinderHeader(string bhdPath, BHD5.Bhd5Format bhdFormat, BinderKeysReader binderKeys, bool expectPems)
     {
         byte[] bytes = File.ReadAllBytes(bhdPath);
         if (!BHD5.Is(bytes))
-        {
-            string key;
-            if (expectPems)
-            {
-                string dir = Path.GetDirectoryName(bhdPath);
-                string keyFile = Path.GetFileName(bhdPath).Replace("Ebl.bhd", "KeyCode.pem");
-                string keyPath = Path.Combine(dir, keyFile);
-                AssertFileExists(keyPath, "Encryption key not found; please verify integrity for Steam games.");
-                key = File.ReadAllText(keyPath);
-            }
-            else
-            {
-                key = binderKeys.ReadKey(bhdPath);
-            }
-            bytes = Crypto.DecryptRsa(bytes, key);
-        }
+            bytes = DecryptBinderHeader(bhdPath, binderKeys, expectPems, bytes);
         return BHD5.Read(bytes, bhdFormat);
     }
 }

@@ -120,6 +120,16 @@ public partial class MainWindow : Window
         });
     }
 
+    private async void ButtonAdvancedDecrypt_Click(object sender, RoutedEventArgs e)
+    {
+        await RunOperation("Decrypt", () =>
+        {
+            if (State.ManualGame == null)
+                throw new FriendlyException("Game type must be selected manually in advanced mode.");
+            return new DecryptOperation(State.ResDir, State.GameDir, State.ManualGame);
+        });
+    }
+
     private async Task RunOperation(string operationVerb, Func<Operation> createOperation)
     {
         // Keep this up here so it doesn't dispose before the Abort button is disabled

@@ -43,6 +43,7 @@ internal class PatchOperation : Operation
         string[] aliases = [.. GameConfig.PatchAliases];
         for (int i = 0; i < aliases.Length; i++)
         {
+            CancellationToken.ThrowIfCancellationRequested();
             string alias = aliases[i];
             double progress = (double)i / aliases.Length;
             Progress.Report(new(progress, $"{step} - (Alias {i}/{aliases.Length}) {alias}"));

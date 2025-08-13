@@ -59,10 +59,10 @@
                         <StackPanel>
                             <Label>Game Executable</Label>
                             <local:PathInput Mode="OpenFile" Prompt="Select executable file" Path="{Binding GameExe, Mode=TwoWay}"/>
-                            
+
                             <CheckBox IsChecked="{Binding UsePatchOutputPath}">Save to separate file (disables backup)</CheckBox>
                             <local:PathInput Mode="SaveFile" Prompt="Save patched file as..." Path="{Binding PatchOutputPath, Mode=TwoWay}"/>
-                            
+
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
@@ -80,7 +80,6 @@
                         <StackPanel>
                             <Label>Game Directory</Label>
                             <local:PathInput Mode="OpenFolder" Prompt="Select game directory"  Path="{Binding GameDir, Mode=TwoWay}"/>
-                            <Label>Game Type</Label>
 
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -99,7 +98,6 @@
                         <StackPanel>
                             <Label>Game Directory</Label>
                             <local:PathInput Mode="OpenFolder" Prompt="Select game directory"  Path="{Binding GameDir, Mode=TwoWay}"/>
-                            <Label>Game Type</Label>
 
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -110,7 +108,7 @@
                                     <Label>Game Type</Label>
                                     <ComboBox Grid.Column="0" ItemsSource="{Binding GameConfigs}" SelectedItem="{Binding ManualGame}"/>
                                 </StackPanel>
-                                <Button Grid.Column="1" VerticalAlignment="Bottom">Decrypt</Button>
+                                <Button Grid.Column="1" VerticalAlignment="Bottom" Click="ButtonAdvancedDecrypt_Click">Decrypt</Button>
                             </Grid>
                         </StackPanel>
                     </TabItem>
