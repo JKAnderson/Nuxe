@@ -1,5 +1,5 @@
 
---| Nuxe 1.0.0
+--| Nuxe 1.0.1
 --| https://github.com/JKAnderson/Nuxe
 --| By TKGP https://tkgp.neocities.org/
 
@@ -70,3 +70,10 @@ If you need to patch Sekiro, use a tool like Steamless to strip out the SteamDRM
 
 - Armored Core VI, Elden Ring, Elden Ring Nightreign (PC)
 For these games, patching mostly works, but doesn't support files in the "sd" folder.
+
+
+Changelog
+---------
+
+1.0.1
+- Dictionary update for ACVD and NR
