@@ -1,5 +1,5 @@
 
---| Nuxe 1.0.1
+--| Nuxe 1.1.0
 --| https://github.com/JKAnderson/Nuxe
 --| By TKGP https://tkgp.neocities.org/
 
@@ -74,6 +74,11 @@ For these games, patching mostly works, but doesn't support files in the "sd" fo
 
 Changelog
 ---------
+
+1.1.0
+- DLC support for NR
+- Dictionary update for ACV/ACVD
+- Fixed failure when operating on certain older versions of DS2
 
 1.0.1
 - Dictionary update for ACVD and NR

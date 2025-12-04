@@ -23,8 +23,18 @@
             "DataPath": "data3.bdt"
         },
         {
+            "HeaderPath": "dlc01.bhd",
+            "DataPath": "dlc01.bdt",
+            "Optional": true
+        },
+        {
             "HeaderPath": "sd/sd.bhd",
             "DataPath": "sd/sd.bdt"
+        },
+        {
+            "HeaderPath": "sd/sd_dlc01.bhd",
+            "DataPath": "sd/sd_dlc01.bdt",
+            "Optional": true
         }
     ],
     "BackupDirs": [

@@ -42,7 +42,7 @@ internal static class Common
         {
             key = binderKeys.ReadKey(bhdPath);
         }
-        return Crypto.DecryptRsa(bytes, key);
+        return Coremats.Crypto.Binder5.DecryptBhd(bytes, key);
     }
 
     public static BHD5 ReadBinderHeader(string bhdPath, BHD5.Bhd5Format bhdFormat, BinderKeysReader binderKeys, bool expectPems)
