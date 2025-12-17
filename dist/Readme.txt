@@ -1,5 +1,5 @@
 
---| Nuxe 1.1.0
+--| Nuxe 1.1.1
 --| https://github.com/JKAnderson/Nuxe
 --| By TKGP https://tkgp.neocities.org/
 
@@ -22,7 +22,8 @@ Nuxe supports all FromSoftware games that use large BinderLight archives:
 
 Unpacking is available for all games; exe patching is only available for PC games, at the moment.
 
-If you find this tool useful, you can support me on Patreon:
+If you find this tool useful, you can support me on Ko-fi or Patreon:
+https://ko-fi.com/tkgp
 https://www.patreon.com/c/TKGP
 
 
@@ -74,6 +75,9 @@ For these games, patching mostly works, but doesn't support files in the "sd" fo
 
 Changelog
 ---------
+
+1.1.1
+- Dictionary update for NR
 
 1.1.0
 - DLC support for NR

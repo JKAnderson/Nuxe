@@ -19,7 +19,7 @@ Nuxe supports all FromSoftware games that use large BinderLight archives:
 
 Unpacking is available for all games; exe patching is only available for PC games, at the moment.
 
-If you find this tool useful, you can support me on [Patreon](https://www.patreon.com/c/TKGP).
+If you find this tool useful, you can support me on [Ko-fi](https://ko-fi.com/tkgp) or [Patreon](https://www.patreon.com/c/TKGP).
 
 ## Libraries
 
