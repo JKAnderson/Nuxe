@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36327.8
+# Visual Studio Version 18
+VisualStudioVersion = 18.4.11620.152 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuxe", "Nuxe\Nuxe.csproj", "{ECD8815C-1C3D-4C0A-9125-5096C08F7515}"
 EndProject
@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 		dist\Readme.txt = dist\Readme.txt
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bex", "lib\Coremats\Bex\Bex.csproj", "{EFE6FA7E-3E9D-DFAE-E61D-3CB5DCCA84FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{269402A8-4ACE-2485-2A2A-63E874A97E2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{269402A8-4ACE-2485-2A2A-63E874A97E2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{269402A8-4ACE-2485-2A2A-63E874A97E2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFE6FA7E-3E9D-DFAE-E61D-3CB5DCCA84FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFE6FA7E-3E9D-DFAE-E61D-3CB5DCCA84FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFE6FA7E-3E9D-DFAE-E61D-3CB5DCCA84FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFE6FA7E-3E9D-DFAE-E61D-3CB5DCCA84FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
