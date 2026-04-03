@@ -76,6 +76,8 @@ For these games, patching mostly works, but doesn't support files in the "sd" fo
 Changelog
 ---------
 
+- Patching supports DLC files for NR
+
 1.1.1
 - Dictionary update for NR
 
