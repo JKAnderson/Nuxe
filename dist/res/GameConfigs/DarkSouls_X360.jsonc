@@ -8,6 +8,16 @@
     "BinderFormat": "DarkSouls",
     "Binders": [
         {
+            "HeaderPath": "dlcbnd0.bhd5",
+            "DataPath": "dlcbnd0.bdt",
+            "Optional": true
+        },
+        {
+            "HeaderPath": "dlcbnd1.bhd5",
+            "DataPath": "dlcbnd1.bdt",
+            "Optional": true
+        },
+        {
             "HeaderPath": "dvdbnd0.bhd5",
             "DataPath": "dvdbnd0.bdt"
         },

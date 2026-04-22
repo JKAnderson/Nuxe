@@ -77,6 +77,7 @@ Changelog
 ---------
 
 - Patching supports DLC files for NR
+- Support Dark Souls (X360) Artorias of the Abyss
 
 1.1.1
 - Dictionary update for NR
