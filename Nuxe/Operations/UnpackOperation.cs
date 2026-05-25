@@ -150,7 +150,7 @@ internal class UnpackOperation : Operation
                 bdtStreams[binder.Config.DataPath] = File.OpenRead(bdtPath);
             }
 
-            int maxLength = files.Select(file => file.HeaderFile.DataLength).Max();
+            int maxLength = files.Max(file => file.HeaderFile.DataLength);
             byte[] buffer = new byte[maxLength];
             for (int i = 0; i < files.Count; i++)
             {
@@ -187,19 +187,22 @@ internal class UnpackOperation : Operation
         return buffer.AsSpan(0, finalLength);
     }
 
+    private static readonly byte[] NullIv = new byte[16];
+
     private static void DecryptFile(BHD5.FileEncryption encryption, byte[] buffer)
     {
-        var aes = Aes.Create();
+        using var aes = Aes.Create();
         aes.Mode = CipherMode.ECB;
         aes.Padding = PaddingMode.None;
-        aes.KeySize = 128;
+        aes.Key = encryption.Key;
+        aes.IV = NullIv;
 
-        using ICryptoTransform decryptor = aes.CreateDecryptor(encryption.Key, new byte[16]);
         foreach (BHD5.Range range in encryption.Ranges.Where(r => r.Start != -1 && r.End != -1 && r.Start != r.End))
         {
             int start = (int)range.Start;
             int count = (int)(range.End - range.Start);
-            decryptor.TransformBlock(buffer, start, count, buffer, start);
+            var span = buffer.AsSpan(start, count);
+            aes.DecryptEcb(span, span, aes.Padding);
         }
     }
 
