@@ -1,6 +1,3 @@
-[submodule "lib/Coremats"]
-	path = lib/Coremats
-	url = https://github.com/JKAnderson/Coremats
 [submodule "dist/res/BinderKeys"]
 	path = dist/res/BinderKeys
 	url = https://github.com/JKAnderson/BinderKeys
