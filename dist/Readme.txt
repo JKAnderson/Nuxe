@@ -76,8 +76,10 @@ For these games, patching mostly works, but doesn't support files in the "sd" fo
 Changelog
 ---------
 
-- Patching supports DLC files for NR
 - Support Dark Souls (X360) Artorias of the Abyss
+- Patching supports DLC files for NR
+- Dictionary update for various older games
+- Mild performance improvement when unpacking
 
 1.1.1
 - Dictionary update for NR

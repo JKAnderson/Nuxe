@@ -120,7 +120,8 @@ internal class UnpackOperation : Operation
         }
 
         CheckFreeSpace(requiredSpace);
-        return files;
+        // Improves performance a bit, and makes the progress look nicer
+        return [.. files.OrderBy(f => f.BinderConfig.DataPath).ThenBy(f => f.HeaderFile.DataOffset)];
     }
 
     private void CheckFreeSpace(long requiredSpace)
