@@ -146,12 +146,9 @@ public partial class MainWindow : Window
             await Task.Run(() => createOperation().Run(OperationProgress, OperationCancellation.Token));
 
             sw.Stop();
+            var elapsed = sw.Elapsed + TimeSpan.FromSeconds(1); // :3c
+            OperationProgress.Report(new(1, $"{operationVerb} completed in {elapsed:mm\\mss\\s}!"));
             SystemSounds.Beep.Play();
-#if DEBUG
-            OperationProgress.Report(new(1, $"{operationVerb} completed in {sw.Elapsed:hh\\:mm\\:ss}!"));
-#else
-            OperationProgress.Report(new(1, $"{operationVerb} completed!"));
-#endif
         }
         catch (OperationCanceledException)
         {
