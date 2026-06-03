@@ -1,5 +1,5 @@
 
---| Nuxe 1.1.1
+--| Nuxe 1.2.0
 --| https://github.com/JKAnderson/Nuxe
 --| By TKGP https://tkgp.neocities.org/
 
@@ -76,7 +76,8 @@ For these games, patching mostly works, but doesn't support files in the "sd" fo
 Changelog
 ---------
 
-- Support Dark Souls (X360) Artorias of the Abyss
+1.2.0
+- Support for Dark Souls (X360) Artorias of the Abyss
 - Patching supports DLC files for NR
 - Dictionary update for various older games
 - Mild performance improvement when unpacking
