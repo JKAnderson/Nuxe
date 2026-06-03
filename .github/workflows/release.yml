@@ -1,0 +1,35 @@
+on:
+  push:
+    tags: ['v*']
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v6
+      with:
+        submodules: true
+
+    - name: Get tag version
+      run: echo "VERSION=${GITHUB_REF_NAME/#v}" | tee $GITHUB_ENV
+    
+    - name: Set release title
+      run: echo "TITLE=Nuxe ${VERSION}" | tee $GITHUB_ENV
+    
+    - name: Publish
+      run: dotnet publish Nuxe -o "publish/${TITLE}" -p:PublishSingleFile=true --no-self-contained
+    
+    - name: Copy dist files
+      run: cp -r dist/* "publish/${TITLE}"
+    
+    - name: Upload artifact
+      uses: actions/upload-artifact@v7
+      with:
+        name: ${{ env.TITLE }}
+        path: publish
