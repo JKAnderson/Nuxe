@@ -76,6 +76,8 @@ For these games, patching mostly works, but doesn't support files in the "sd" fo
 Changelog
 ---------
 
+- Fixed Advanced Patch not respecting selected game
+
 1.2.0
 - Support for Dark Souls (X360) Artorias of the Abyss
 - Patching supports DLC files for NR

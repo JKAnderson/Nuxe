@@ -73,6 +73,7 @@ public partial class MainWindow : Window
         {
             if (State.ManualGame == null)
                 throw new FriendlyException("Game type must be selected manually in advanced mode.");
+
             string unpackDir = State.UseUnpackDir ? State.UnpackDir : null;
             string unpackFilter = State.UseUnpackFilter ? State.UnpackFilter : null;
             return new UnpackOperation(State.ResDir, State.GameDir, State.ManualGame, unpackDir, unpackFilter, State.UnpackOverwrite, true);
@@ -93,10 +94,12 @@ public partial class MainWindow : Window
     {
         await RunOperation("Patching", () =>
         {
+            if (State.ManualGame == null)
+                throw new FriendlyException("Game type must be selected manually in advanced mode.");
+
             string gameDir = Path.GetDirectoryName(State.GameExe);
-            var gameConfig = GameConfig.DetectGameConfig(State.GameConfigs, gameDir);
             string outputPath = State.UsePatchOutputPath ? State.PatchOutputPath : null;
-            return new PatchOperation(State.GameExe, gameConfig, outputPath);
+            return new PatchOperation(State.GameExe, State.ManualGame, outputPath);
         });
     }
 
@@ -116,6 +119,7 @@ public partial class MainWindow : Window
         {
             if (State.ManualGame == null)
                 throw new FriendlyException("Game type must be selected manually in advanced mode.");
+
             return new RestoreOperation(State.GameDir, State.ManualGame);
         });
     }
@@ -126,6 +130,7 @@ public partial class MainWindow : Window
         {
             if (State.ManualGame == null)
                 throw new FriendlyException("Game type must be selected manually in advanced mode.");
+
             return new DecryptOperation(State.ResDir, State.GameDir, State.ManualGame);
         });
     }
