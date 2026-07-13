@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.IO;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 
 namespace Nuxe;
@@ -15,8 +14,11 @@ internal class MainWindowState : INotifyPropertyChanged
 
     public MainWindowState()
     {
-        TitleText = $"Nuxe {Assembly.GetExecutingAssembly().GetName().Version.ToString(3)}";
-        ResDir = Path.GetFullPath(Environment.GetEnvironmentVariable("NUXE_RES_DIR") ?? "res");
+        TitleText = $"Nuxe {typeof(App).Assembly.GetName().Version.ToString(3)}";
+
+        string resDir = Path.Combine(AppContext.BaseDirectory, "res");
+        string resDirOverride = Environment.GetEnvironmentVariable("NUXE_RES_DIR");
+        ResDir = Path.GetFullPath(resDirOverride ?? resDir);
         GameConfigs = GameConfig.LoadGameConfigs(ResDir);
 
         if (!Settings.Upgraded)

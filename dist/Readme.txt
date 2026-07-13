@@ -77,6 +77,7 @@ Changelog
 ---------
 
 - Fixed Advanced Patch not respecting selected game
+- Fixed resources failing to be found if launched from Windows search
 
 1.2.0
 - Support for Dark Souls (X360) Artorias of the Abyss
