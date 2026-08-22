@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="dist/Readme.txt" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="Nuxe/Nuxe.csproj" />
+</Solution>
