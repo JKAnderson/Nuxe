@@ -12,6 +12,17 @@ internal class MainWindowState : INotifyPropertyChanged
     public string ResDir { get; }
     public GameConfig[] GameConfigs { get; }
 
+    public string GameDir { get; set => ChangeProperty(ref field, value); }
+    public string GameExe { get; set => ChangeProperty(ref field, value); }
+    public GameConfig ManualGame { get; set => ChangeProperty(ref field, value); }
+    public bool UseUnpackDir { get; set => ChangeProperty(ref field, value); }
+    public string UnpackDir { get; set => ChangeProperty(ref field, value); }
+    public bool UseUnpackFilter { get; set => ChangeProperty(ref field, value); }
+    public string UnpackFilter { get; set => ChangeProperty(ref field, value); }
+    public bool UnpackOverwrite { get; set => ChangeProperty(ref field, value); }
+    public bool UsePatchOutputPath { get; set => ChangeProperty(ref field, value); }
+    public string PatchOutputPath { get; set => ChangeProperty(ref field, value); }
+
     public MainWindowState()
     {
         TitleText = $"Nuxe {typeof(App).Assembly.GetName().Version.ToString(3)}";
@@ -52,76 +63,6 @@ internal class MainWindowState : INotifyPropertyChanged
         Settings.UsePatchOutputPath = UsePatchOutputPath;
         Settings.PatchOutputPath = PatchOutputPath;
         Settings.Save();
-    }
-
-    private string _gameDir;
-    public string GameDir
-    {
-        get => _gameDir;
-        set => ChangeProperty(ref _gameDir, value);
-    }
-
-    private string _gameExe;
-    public string GameExe
-    {
-        get => _gameExe;
-        set => ChangeProperty(ref _gameExe, value);
-    }
-
-    private GameConfig _manualGame;
-    public GameConfig ManualGame
-    {
-        get => _manualGame;
-        set => ChangeProperty(ref _manualGame, value);
-    }
-
-    private bool _useUnpackDir;
-    public bool UseUnpackDir
-    {
-        get => _useUnpackDir;
-        set => ChangeProperty(ref _useUnpackDir, value);
-    }
-
-    private string _unpackDir;
-    public string UnpackDir
-    {
-        get => _unpackDir;
-        set => ChangeProperty(ref _unpackDir, value);
-    }
-
-    private bool _useUnpackFilter;
-    public bool UseUnpackFilter
-    {
-        get => _useUnpackFilter;
-        set => ChangeProperty(ref _useUnpackFilter, value);
-    }
-
-    private string _unpackFilter;
-    public string UnpackFilter
-    {
-        get => _unpackFilter;
-        set => ChangeProperty(ref _unpackFilter, value);
-    }
-
-    private bool _unpackOverwrite;
-    public bool UnpackOverwrite
-    {
-        get => _unpackOverwrite;
-        set => ChangeProperty(ref _unpackOverwrite, value);
-    }
-
-    private bool _usePatchOutputPath;
-    public bool UsePatchOutputPath
-    {
-        get => _usePatchOutputPath;
-        set => ChangeProperty(ref _usePatchOutputPath, value);
-    }
-
-    private string _patchOutputPath;
-    public string PatchOutputPath
-    {
-        get => _patchOutputPath;
-        set => ChangeProperty(ref _patchOutputPath, value);
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
