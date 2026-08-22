@@ -7,10 +7,6 @@ namespace Nuxe;
 
 internal class UnpackOperation : Operation
 {
-    private const long MB = 1024 * 1024;
-    // A completely arbitrary 10MB buffer because it just feels like a good idea somehow
-    private const long REQUIRED_SPACE_PADDING = MB * 10;
-
     private BinderKeysReader BinderKeys { get; }
     private string GameDir { get; }
     private GameConfig GameConfig { get; }
@@ -126,12 +122,29 @@ internal class UnpackOperation : Operation
 
     private void CheckFreeSpace(long requiredSpace)
     {
-        requiredSpace += REQUIRED_SPACE_PADDING;
-        long availableSpace = new DriveInfo(Path.GetPathRoot(UnpackDir)).AvailableFreeSpace;
+        const long MB = 1024 * 1024, GB = 1024 * MB;
+
+        // Anecdotally, Elden Ring has about 0.0037% overhead on disk in Windows, so this should be an extremely safe bet
+        // Of course if you have NTFS compression or something similar enabled this is all nonsense,
+        // so if I wasn't lazy it would be a Continue/Abort prompt instead of a hard failure
+        double requiredSpaceGuesstimate = requiredSpace * 1.005 + 50 * MB;
+        long availableSpace;
+        try
+        {
+            // On Linux DriveInfo accepts relative paths; on Windows, it does not
+            // In reality UnpackDir is already absolute here, but it's the principle of the thing
+            availableSpace = new DriveInfo(Path.GetFullPath(UnpackDir)).AvailableFreeSpace;
+        }
+        catch
+        {
+            // The above will fail if you're unpacking to a UNC path for some godforsaken reason, so just cross your fingers
+            return;
+        }
+
         if (availableSpace < requiredSpace)
         {
-            double requiredGb = (double)requiredSpace / (MB * 1024);
-            double availableGb = (double)availableSpace / (MB * 1024);
+            double requiredGb = requiredSpaceGuesstimate / GB;
+            double availableGb = (double)availableSpace / GB;
             throw new FriendlyException($"Not enough disk space to unpack files; {requiredGb:F2} GB required, {availableGb:F2} GB available.");
         }
     }
