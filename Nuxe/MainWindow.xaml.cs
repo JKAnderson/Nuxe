@@ -54,6 +54,7 @@ public partial class MainWindow : Window
 
     private void ButtonAbort_Click(object sender, RoutedEventArgs e)
     {
+        ButtonAbort.IsEnabled = false;
         OperationCancellation.Cancel();
     }
 
