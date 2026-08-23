@@ -1,8 +1,8 @@
 ﻿<Application x:Class="Nuxe.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Nuxe"
-             StartupUri="MainWindow.xaml">
+             StartupUri="Views/MainWindow.xaml">
+
     <Application.Resources>
         <Style x:Key="BoxStyle" TargetType="Control">
             <Setter Property="Margin" Value="3"/>
@@ -34,4 +34,5 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
     </Application.Resources>
+
 </Application>

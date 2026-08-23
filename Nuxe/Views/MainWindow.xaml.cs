@@ -1,15 +1,15 @@
-﻿using System.Diagnostics;
+﻿using Nuxe.ViewModels;
+using System.Diagnostics;
 using System.IO;
 using System.Media;
 using System.Windows;
 using System.Windows.Threading;
 
-namespace Nuxe;
+namespace Nuxe.Views;
 
 public partial class MainWindow : Window
 {
-    internal MainWindowState State { get; set; }
-
+    private MainViewModel State { get; set; }
     private IProgress<OperationProgress> OperationProgress { get; }
     private CancellationTokenSource OperationCancellation { get; set; }
     private OperationProgress LastProgress { get; set; }
@@ -98,7 +98,6 @@ public partial class MainWindow : Window
             if (State.ManualGame == null)
                 throw new FriendlyException("Game type must be selected manually in advanced mode.");
 
-            string gameDir = Path.GetDirectoryName(State.GameExe);
             string outputPath = State.UsePatchOutputPath ? State.PatchOutputPath : null;
             return new PatchOperation(State.GameExe, State.ManualGame, outputPath);
         });

@@ -1,4 +1,6 @@
 ﻿using Coremats;
+using Nuxe.ViewModels;
+using Nuxe.Views;
 using System.IO;
 using System.Media;
 
@@ -9,10 +11,12 @@ internal static class Common
     public static void DisplayError(Exception ex)
     {
         SystemSounds.Hand.Play();
+        ErrorViewModel vm;
         if (ex is FriendlyException)
-            new ErrorWindow(ex.Message, ex.InnerException?.ToString()).ShowDialog();
+            vm = new(ex.Message, ex.InnerException?.ToString());
         else
-            new ErrorWindow("An unexpected error occurred.", ex.ToString()).ShowDialog();
+            vm = new("An unexpected error occurred.", ex.ToString());
+        new ErrorWindow() { DataContext = vm }.ShowDialog();
     }
 
     public static void AssertDirExists(string dir, string message)

@@ -1,10 +1,9 @@
-﻿using System.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.IO;
-using System.Runtime.CompilerServices;
 
-namespace Nuxe;
+namespace Nuxe.ViewModels;
 
-internal class MainWindowState : INotifyPropertyChanged
+internal partial class MainViewModel : ObservableObject
 {
     private static Properties.Settings Settings => Properties.Settings.Default;
 
@@ -12,18 +11,18 @@ internal class MainWindowState : INotifyPropertyChanged
     public string ResDir { get; }
     public GameConfig[] GameConfigs { get; }
 
-    public string GameDir { get; set => ChangeProperty(ref field, value); }
-    public string GameExe { get; set => ChangeProperty(ref field, value); }
-    public GameConfig ManualGame { get; set => ChangeProperty(ref field, value); }
-    public bool UseUnpackDir { get; set => ChangeProperty(ref field, value); }
-    public string UnpackDir { get; set => ChangeProperty(ref field, value); }
-    public bool UseUnpackFilter { get; set => ChangeProperty(ref field, value); }
-    public string UnpackFilter { get; set => ChangeProperty(ref field, value); }
-    public bool UnpackOverwrite { get; set => ChangeProperty(ref field, value); }
-    public bool UsePatchOutputPath { get; set => ChangeProperty(ref field, value); }
-    public string PatchOutputPath { get; set => ChangeProperty(ref field, value); }
+    [ObservableProperty] public partial string GameDir { get; set; }
+    [ObservableProperty] public partial string GameExe { get; set; }
+    [ObservableProperty] public partial GameConfig ManualGame { get; set; }
+    [ObservableProperty] public partial bool UseUnpackDir { get; set; }
+    [ObservableProperty] public partial string UnpackDir { get; set; }
+    [ObservableProperty] public partial bool UseUnpackFilter { get; set; }
+    [ObservableProperty] public partial string UnpackFilter { get; set; }
+    [ObservableProperty] public partial bool UnpackOverwrite { get; set; }
+    [ObservableProperty] public partial bool UsePatchOutputPath { get; set; }
+    [ObservableProperty] public partial string PatchOutputPath { get; set; }
 
-    public MainWindowState()
+    public MainViewModel()
     {
         TitleText = $"Nuxe {typeof(App).Assembly.GetName().Version.ToString(3)}";
 
@@ -63,13 +62,5 @@ internal class MainWindowState : INotifyPropertyChanged
         Settings.UsePatchOutputPath = UsePatchOutputPath;
         Settings.PatchOutputPath = PatchOutputPath;
         Settings.Save();
-    }
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    private void ChangeProperty<T>(ref T field, T value, [CallerMemberName] string name = null)
-    {
-        field = value;
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }

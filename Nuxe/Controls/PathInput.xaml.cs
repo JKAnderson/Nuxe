@@ -4,7 +4,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Nuxe;
+namespace Nuxe.Controls;
 
 public partial class PathInput : UserControl
 {
@@ -129,7 +129,7 @@ public partial class PathInput : UserControl
         try
         {
             string dir = GetLastExistingDir(Path);
-            Process.Start("explorer.exe", $"\"{dir}");
+            Process.Start("explorer.exe", $"\"{dir}\"");
         }
         catch (Exception ex)
         {

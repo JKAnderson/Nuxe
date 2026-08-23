@@ -1,0 +1,118 @@
+﻿<Window x:Class="Nuxe.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:Nuxe.Controls"
+        xmlns:viewmodels="clr-namespace:Nuxe.ViewModels"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+        Title="{Binding TitleText}" d:Title="Nuxe 0.0.0" 
+        SizeToContent="Height" MinWidth="450" Width="800" 
+        Loaded="Window_Loaded" Closed="Window_Closed">
+    
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo ProgressState="Normal"/>
+    </Window.TaskbarItemInfo>
+    
+    <StackPanel Margin="6">
+        <TabControl Name="TabControlSettings">
+            <TabItem Header="Basic">
+                <StackPanel>
+                    <Label>Game Executable</Label>
+                    <controls:PathInput Mode="OpenFile" Prompt="Select game executable" FileFilter="Executable file|*.exe;eboot.bin;default.xex;main" Path="{Binding GameExe, Mode=TwoWay}"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Click="ButtonBasicUnpack_Click">Unpack</Button>
+                        <Button Click="ButtonBasicPatch_Click">Patch</Button>
+                        <Button Click="ButtonBasicRestore_Click">Restore</Button>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Header="Advanced">
+                <TabControl Margin="-3 3 -3 -3">
+                    <TabItem Header="Unpack">
+                        <StackPanel>
+                            <Label>Game Directory</Label>
+                            <controls:PathInput Mode="OpenFolder" Prompt="Select game directory" Path="{Binding GameDir, Mode=TwoWay}"/>
+
+                            <CheckBox IsChecked="{Binding UseUnpackDir}">Unpack to separate directory (disables backup)</CheckBox>
+                            <controls:PathInput IsEnabled="{Binding UseUnpackDir}" Mode="OpenFolder" Prompt="Select unpack directory" Path="{Binding UnpackDir, Mode=TwoWay}"/>
+
+                            <CheckBox IsChecked="{Binding UseUnpackFilter}">Filter files (Regex)</CheckBox>
+                            <TextBox IsEnabled="{Binding UseUnpackFilter}" Text="{Binding UnpackFilter, Mode=TwoWay}"/>
+
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox IsChecked="{Binding UnpackOverwrite}">Overwrite existing files</CheckBox>
+                            </StackPanel>
+
+                            <StackPanel>
+                                <Label>Game Type</Label>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <ComboBox Grid.Column="0" ItemsSource="{Binding GameConfigs}" SelectedItem="{Binding ManualGame}"/>
+                                    <Button Grid.Column="1" VerticalAlignment="Bottom" Click="ButtonAdvancedUnpack_Click">Unpack</Button>
+                                </Grid>
+                            </StackPanel>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Patch">
+                        <StackPanel>
+                            <Label>Game Executable</Label>
+                            <controls:PathInput Mode="OpenFile" Prompt="Select executable file" Path="{Binding GameExe, Mode=TwoWay}"/>
+
+                            <CheckBox IsChecked="{Binding UsePatchOutputPath}">Save to separate file (disables backup)</CheckBox>
+                            <controls:PathInput Mode="SaveFile" Prompt="Save patched file as..." Path="{Binding PatchOutputPath, Mode=TwoWay}"/>
+
+                            <StackPanel>
+                                <Label>Game Type</Label>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <ComboBox Grid.Column="0" ItemsSource="{Binding GameConfigs}" SelectedItem="{Binding ManualGame}"/>
+                                    <Button Grid.Column="1" VerticalAlignment="Bottom" Click="ButtonAdvancedPatch_Click">Patch</Button>
+                                </Grid>
+                            </StackPanel>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Restore">
+                        <StackPanel>
+                            <Label>Game Directory</Label>
+                            <controls:PathInput Mode="OpenFolder" Prompt="Select game directory"  Path="{Binding GameDir, Mode=TwoWay}"/>
+
+                            <StackPanel>
+                                <Label>Game Type</Label>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <ComboBox Grid.Column="0" ItemsSource="{Binding GameConfigs}" SelectedItem="{Binding ManualGame}"/>
+                                    <Button Grid.Column="1" VerticalAlignment="Bottom" Click="ButtonAdvancedRestore_Click">Restore</Button>
+                                </Grid>
+                            </StackPanel>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Decrypt">
+                        <StackPanel>
+                            <Label>Game Directory</Label>
+                            <controls:PathInput Mode="OpenFolder" Prompt="Select game directory"  Path="{Binding GameDir, Mode=TwoWay}"/>
+
+                            <StackPanel>
+                                <Label>Game Type</Label>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <ComboBox Grid.Column="0" ItemsSource="{Binding GameConfigs}" SelectedItem="{Binding ManualGame}"/>
+                                    <Button Grid.Column="1" VerticalAlignment="Bottom" Click="ButtonAdvancedDecrypt_Click">Decrypt</Button>
+                                </Grid>
+                            </StackPanel>
+                        </StackPanel>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+        </TabControl>
+
+        <GroupBox Header="Status">
+            <StackPanel>
+                <Grid ColumnDefinitions="*,Auto">
+                    <TextBox Name="TextBoxStatus" Grid.Column="0" IsReadOnly="True"/>
+                    <Button Name="ButtonAbort" Grid.Column="1" IsEnabled="False" Click="ButtonAbort_Click">Abort</Button>
+                </Grid>
+                <ProgressBar Name="ProgressBar" d:Value="50"/>
+            </StackPanel>
+        </GroupBox>
+    </StackPanel>
+    
+</Window>
