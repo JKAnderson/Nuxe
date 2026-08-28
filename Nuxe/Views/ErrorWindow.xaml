@@ -9,10 +9,10 @@
     
     <StackPanel Margin="10">
         <TextBox Name="TextBoxMessage" IsReadOnly="True" Height="Auto" BorderThickness="0" 
-                 Text="{Binding Message}" d:Text="Error message goes here!"/>
+                 Text="{Binding Message, Mode=OneWay}" d:Text="Error message goes here!"/>
         <TextBox Name="TextBoxDetails" IsReadOnly="True" MinHeight="100" Height="Auto" MaxHeight="400" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" 
-                 Text="{Binding Details}" d:Text="Error details go here!"
-                 Visibility="{Binding DetailsVisibility}"/>
+                 Text="{Binding Details, Mode=OneWay}" d:Text="Error details go here!"
+                 Visibility="{Binding DetailsVisibility, Mode=OneWay}"/>
         <Button Margin="10 10 10 0" Click="Button_Click">OK</Button>
     </StackPanel>
     
