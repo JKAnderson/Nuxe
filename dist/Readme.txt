@@ -1,5 +1,5 @@
 
---| Nuxe 1.2.0
+--| Nuxe 1.2.1
 --| https://github.com/JKAnderson/Nuxe
 --| By TKGP https://tkgp.neocities.org/
 
@@ -76,6 +76,8 @@ For these games, patching mostly works, but doesn't support files in the "sd" fo
 Changelog
 ---------
 
+1.2.1
+- Dictionary update for ER
 - Fixed Advanced Patch not respecting selected game
 - Fixed resources failing to be found if launched from Windows search
 
