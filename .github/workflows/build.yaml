@@ -1,10 +1,10 @@
 on:
   push:
-    tags: ["v*"]
+    branches: ["**"]
 
 jobs:
-  publish-release:
-    name: Publish release
+  publish-build:
+    name: Publish build
     runs-on: ubuntu-latest
 
     steps:
@@ -13,12 +13,9 @@ jobs:
       with:
         submodules: true
 
-    - name: Get version from tag
-      run: echo "VERSION=${GITHUB_REF_NAME/#v}" | tee $GITHUB_ENV
-    
-    - name: Set release title
-      run: echo "TITLE=Nuxe-${VERSION}" | tee $GITHUB_ENV
-    
+    - name: Set build title
+      run: echo "TITLE=Nuxe-${GITHUB_SHA::16}" | tee $GITHUB_ENV
+
     - name: Publish all targets
       uses: ./.github/actions/publish-all
       with:

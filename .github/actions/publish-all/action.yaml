@@ -1,0 +1,31 @@
+name: Publish All
+description: Publish for all target runtimes
+
+inputs:
+  title:
+    required: true
+
+runs:
+  using: composite
+
+  steps:
+    - name: Publish for Windows
+      uses: ./.github/actions/publish-target
+      with:
+        title: ${{ inputs.title }}
+        target: win-x64
+        target-friendly: windows-x64
+
+    # - name: Publish for Linux
+    #   uses: ./.github/actions/publish-target
+    #   with:
+    #     title: ${{ inputs.title }}
+    #     target: linux-x64
+    #     target-friendly: linux-x64
+
+    # - name: Publish for Mac
+    #   uses: ./.github/actions/publish-target
+    #   with:
+    #     title: ${{ inputs.title }}
+    #     target: osx-x64
+    #     target-friendly: mac-x64

@@ -1,0 +1,28 @@
+name: Publish Target
+description: Publish for target runtime
+
+inputs:
+  title:
+    required: true
+  target:
+    required: true
+  target-friendly:
+    required: true
+
+runs:
+  using: composite
+
+  steps:
+  - name: Dotnet publish
+    shell: bash
+    run: dotnet publish Nuxe -o "publish/${{ inputs.target }}/${{ inputs.title }}" -r "${{ inputs.target }}" -p:PublishSingleFile=true --no-self-contained
+
+  - name: Copy dist files
+    shell: bash
+    run: cp -r dist/* "publish/${{ inputs.target }}/${{ inputs.title }}"
+
+  - name: Upload artifact
+    uses: actions/upload-artifact@v7
+    with:
+      name: ${{ inputs.title }}-${{ inputs.target-friendly }}
+      path: publish/${{ inputs.target }}
