@@ -3,6 +3,7 @@
 	<PropertyGroup>
 		<ApplicationIcon>Assets\icon.ico</ApplicationIcon>
 		<DebugType>embedded</DebugType>
+		<EnableWindowsTargeting>true</EnableWindowsTargeting>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<OutputType>WinExe</OutputType>
