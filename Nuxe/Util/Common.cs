@@ -36,7 +36,7 @@ internal static class Common
         string key;
         if (expectPems)
         {
-            string dir = Path.GetDirectoryName(bhdPath);
+            string dir = Path.GetDirectoryName(bhdPath) ?? throw new ArgumentException($"Malformed bhd path: {bhdPath}");
             string keyFile = Path.GetFileName(bhdPath).Replace("Ebl.bhd", "KeyCode.pem");
             string keyPath = Path.Combine(dir, keyFile);
             AssertFileExists(keyPath, "Encryption key not found; please verify integrity for Steam games.");

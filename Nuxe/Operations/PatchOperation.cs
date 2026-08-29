@@ -9,7 +9,7 @@ internal class PatchOperation : Operation
     private GameConfig GameConfig { get; }
     private string OutputPath { get; }
 
-    public PatchOperation(string exePath, GameConfig gameConfig, string outputPath)
+    public PatchOperation(string exePath, GameConfig gameConfig, string? outputPath)
     {
         if (gameConfig.PatchAliases == null)
             throw new FriendlyException("Executable patching is not supported for this game.");
@@ -20,7 +20,7 @@ internal class PatchOperation : Operation
         OutputPath = outputPath == null ? ExePath : Path.GetFullPath(outputPath);
     }
 
-    protected override void Run()
+    public override void Run()
     {
         byte[] bytes = File.ReadAllBytes(ExePath);
         int aliasesPatched = Patch("(Step 1/1) Patching aliases", bytes);
@@ -29,7 +29,8 @@ internal class PatchOperation : Operation
 
         if (OutputPath == ExePath)
         {
-            string backupDir = Path.Combine(Path.GetDirectoryName(ExePath), "_backup");
+            string gameDir = Path.GetDirectoryName(ExePath) ?? throw new ArgumentException($"Malformed exe path: {ExePath}");
+            string backupDir = Path.Combine(gameDir, "_backup");
             string backupPath = Path.Combine(backupDir, Path.GetFileName(ExePath));
             Directory.CreateDirectory(backupDir);
             File.Copy(ExePath, backupPath);

@@ -8,12 +8,12 @@ internal partial class MainViewModel : ObservableObject
     private static Properties.Settings Settings => Properties.Settings.Default;
 
     public string TitleText { get; }
-    public string ResDir { get; }
-    public GameConfig[] GameConfigs { get; }
+    public string ResDir { get; private set; }
+    public GameConfig[] GameConfigs { get; private set; }
 
     [ObservableProperty] public partial string GameDir { get; set; }
     [ObservableProperty] public partial string GameExe { get; set; }
-    [ObservableProperty] public partial GameConfig ManualGame { get; set; }
+    [ObservableProperty] public partial GameConfig? ManualGame { get; set; }
     [ObservableProperty] public partial bool UseUnpackDir { get; set; }
     [ObservableProperty] public partial string UnpackDir { get; set; }
     [ObservableProperty] public partial bool UseUnpackFilter { get; set; }
@@ -24,10 +24,20 @@ internal partial class MainViewModel : ObservableObject
 
     public MainViewModel()
     {
-        TitleText = $"Nuxe {typeof(App).Assembly.GetName().Version.ToString(3)}";
+        TitleText = $"Nuxe {typeof(App).Assembly.GetName().Version?.ToString(3)}";
+        ResDir = "";
+        GameConfigs = [];
+        GameDir = "";
+        GameExe = "";
+        UnpackDir = "";
+        UnpackFilter = "";
+        PatchOutputPath = "";
+    }
 
+    public void Load()
+    {
         string resDir = Path.Combine(AppContext.BaseDirectory, "res");
-        string resDirOverride = Environment.GetEnvironmentVariable("NUXE_RES_DIR");
+        string? resDirOverride = Environment.GetEnvironmentVariable("NUXE_RES_DIR");
         ResDir = Path.GetFullPath(resDirOverride ?? resDir);
         GameConfigs = GameConfig.LoadGameConfigs(ResDir);
 

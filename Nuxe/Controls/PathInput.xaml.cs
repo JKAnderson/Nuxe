@@ -68,7 +68,7 @@ public partial class PathInput : UserControl
 
     private void BrowseOpenFile()
     {
-        string dir = GetLastExistingDir(Path);
+        string? dir = GetLastExistingDir(Path);
         var dialog = new OpenFileDialog()
         {
             CheckFileExists = true,
@@ -89,7 +89,7 @@ public partial class PathInput : UserControl
 
     private void BrowseSaveFile()
     {
-        string dir = GetLastExistingDir(Path);
+        string? dir = GetLastExistingDir(Path);
         var dialog = new SaveFileDialog()
         {
             CheckPathExists = true,
@@ -109,7 +109,7 @@ public partial class PathInput : UserControl
 
     private void BrowseOpenFolder()
     {
-        string dir = GetLastExistingDir(Path);
+        string? dir = GetLastExistingDir(Path);
         var dialog = new OpenFolderDialog()
         {
             FolderName = dir,
@@ -120,7 +120,7 @@ public partial class PathInput : UserControl
         bool? result = dialog.ShowDialog();
         if (result.GetValueOrDefault(false))
         {
-            Path = dialog.FolderName;
+            Path = dialog.FolderName ?? "";
         }
     }
 
@@ -128,8 +128,11 @@ public partial class PathInput : UserControl
     {
         try
         {
-            string dir = GetLastExistingDir(Path);
-            Process.Start("explorer.exe", $"\"{dir}\"");
+            string? dir = GetLastExistingDir(Path);
+            if (dir == null)
+                Process.Start("explorer.exe");
+            else
+                Process.Start("explorer.exe", $"\"{dir}\"");
         }
         catch (Exception ex)
         {
@@ -137,11 +140,12 @@ public partial class PathInput : UserControl
         }
     }
 
-    private static string GetLastExistingDir(string path)
+    private static string? GetLastExistingDir(string path)
     {
-        string dir = path;
-        while (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
-            dir = System.IO.Path.GetDirectoryName(dir);
-        return dir;
+
+        var di = new DirectoryInfo(path);
+        while (di != null && !di.Exists)
+            di = di.Parent;
+        return di?.FullName;
     }
 }

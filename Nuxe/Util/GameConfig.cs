@@ -8,13 +8,13 @@ namespace Nuxe;
 internal class GameConfig
 {
     [JsonRequired]
-    public string Name { get; set; }
+    public string Name { get; set; } = "";
 
     [JsonRequired]
-    public HashSet<string> ExpectedFiles { get; set; }
+    public HashSet<string> ExpectedFiles { get; set; } = [];
 
     [JsonRequired]
-    public string BinderKeysName { get; set; }
+    public string BinderKeysName { get; set; } = "";
 
     [JsonRequired]
     [JsonConverter(typeof(JsonStringEnumConverter))]
@@ -23,27 +23,27 @@ internal class GameConfig
     public bool ExpectPems { get; set; }
 
     [JsonRequired]
-    public IReadOnlyList<Binder> Binders { get; set; }
+    public IReadOnlyList<Binder> Binders { get; set; } = [];
 
     [JsonRequired]
-    public HashSet<string> BackupDirs { get; set; }
+    public HashSet<string> BackupDirs { get; set; } = [];
 
     [JsonRequired]
-    public HashSet<string> DeletePaths { get; set; }
+    public HashSet<string> DeletePaths { get; set; } = [];
 
-    public HashSet<string> PatchAliases { get; set; }
+    public HashSet<string> PatchAliases { get; set; } = [];
 
     public override string ToString() => Name;
 
     public class Binder
     {
         [JsonRequired]
-        public string HeaderPath { get; set; }
+        public string HeaderPath { get; set; } = "";
 
         [JsonRequired]
-        public string DataPath { get; set; }
+        public string DataPath { get; set; } = "";
 
-        public string UnpackDir { get; set; }
+        public string UnpackDir { get; set; } = "";
 
         public bool Optional { get; set; }
     }
@@ -57,7 +57,7 @@ internal class GameConfig
         var configs = Directory.GetFiles(configsDir, "*.jsonc").Select(path =>
         {
             string json = File.ReadAllText(path);
-            return JsonSerializer.Deserialize<GameConfig>(json, SerializerOptions);
+            return JsonSerializer.Deserialize<GameConfig>(json, SerializerOptions) ?? throw new InvalidOperationException($"Json deserialization returned null for: {path}");
         }).OrderBy(config => config.Name).ToArray();
         return configs;
     }

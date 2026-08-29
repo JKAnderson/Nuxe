@@ -19,7 +19,7 @@ internal class DecryptOperation : Operation
         GameConfig = gameConfig;
     }
 
-    protected override void Run()
+    public override void Run()
     {
         DecryptHeaders("(Step 1/1) Decrypting headers");
     }
@@ -41,7 +41,7 @@ internal class DecryptOperation : Operation
                 {
                     bytes = Common.DecryptBinderHeader(bhdPath, BinderKeys, GameConfig.ExpectPems, bytes);
 
-                    string decDir = Path.GetDirectoryName(bhdPath);
+                    string decDir = Path.GetDirectoryName(bhdPath) ?? throw new ArgumentException($"Malformed bhd path: {bhdPath}");
                     string decName = Path.GetFileNameWithoutExtension(bhdPath);
                     string decExt = Path.GetExtension(bhdPath);
                     string decPath = Path.Combine(decDir, $"{decName}-dec{decExt}");

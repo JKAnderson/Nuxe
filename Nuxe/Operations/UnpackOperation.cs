@@ -11,11 +11,11 @@ internal class UnpackOperation : Operation
     private string GameDir { get; }
     private GameConfig GameConfig { get; }
     private string UnpackDir { get; }
-    private Regex UnpackFilter { get; }
+    private Regex? UnpackFilter { get; }
     private bool UnpackOverwrite { get; }
     private bool AllowMissingBinders { get; }
 
-    public UnpackOperation(string resDir, string gameDir, GameConfig gameConfig, string unpackDir, string unpackFilter, bool unpackOverwrite, bool allowMissingBinders)
+    public UnpackOperation(string resDir, string gameDir, GameConfig gameConfig, string? unpackDir, string? unpackFilter, bool unpackOverwrite, bool allowMissingBinders)
     {
         Common.AssertDirExists(gameDir, "Game directory not found; please select a valid directory.");
         GameDir = Path.GetFullPath(gameDir);
@@ -29,7 +29,7 @@ internal class UnpackOperation : Operation
         AllowMissingBinders = allowMissingBinders;
     }
 
-    protected override void Run()
+    public override void Run()
     {
         var binders = ReadBinders("(Step 1/4) Loading headers");
         BackupDirs("(Step 2/4) Backing up files");
@@ -88,11 +88,11 @@ internal class UnpackOperation : Operation
             Progress.Report(new(progress, $"{step} - (File {i}/{binders.Count}) {binder.Config.HeaderPath}"));
 
             string binderName = Path.GetFileNameWithoutExtension(binder.Config.HeaderPath);
-            string unpackDir = binder.Config.UnpackDir ?? Path.GetDirectoryName(binder.Config.HeaderPath);
+            string unpackDir = binder.Config.UnpackDir ?? Path.GetDirectoryName(binder.Config.HeaderPath) ?? throw new ArgumentException($"Malformed header path: {binder.Config.HeaderPath}");
             foreach (var headerFile in binder.Header.Buckets.SelectMany(b => b))
             {
                 string unpackPath;
-                if (binder.Dict.TryGetValue(headerFile.PathHash, out string gamePath))
+                if (binder.Dict.TryGetValue(headerFile.PathHash, out string? gamePath))
                 {
                     unpackPath = Path.Combine(UnpackDir, unpackDir, gamePath.TrimStart('/'));
                 }
@@ -174,7 +174,7 @@ internal class UnpackOperation : Operation
                 Progress.Report(new(progress, $"{step} - (File {i}/{files.Count}) {file.GamePath}"));
 
                 var span = ReadFile(file, bdtStreams, buffer);
-                string unpackDir = Path.GetDirectoryName(file.UnpackPath);
+                string unpackDir = Path.GetDirectoryName(file.UnpackPath) ?? throw new ArgumentException($"Malformed unpack path: {file.UnpackPath}");
                 Directory.CreateDirectory(unpackDir);
                 File.WriteAllBytes(file.UnpackPath, span);
             }

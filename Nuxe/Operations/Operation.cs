@@ -4,15 +4,8 @@ internal record OperationProgress(double Value, string Message);
 
 internal abstract class Operation
 {
-    protected IProgress<OperationProgress> Progress { get; private set; }
-    protected CancellationToken CancellationToken { get; private set; }
+    public required IProgress<OperationProgress> Progress { get; init; }
+    public required CancellationToken CancellationToken { get; init; }
 
-    public void Run(IProgress<OperationProgress> progress, CancellationToken cancellationToken)
-    {
-        Progress = progress;
-        CancellationToken = cancellationToken;
-        Run();
-    }
-
-    protected abstract void Run();
+    public abstract void Run();
 }

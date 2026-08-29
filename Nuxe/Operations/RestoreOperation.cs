@@ -14,7 +14,7 @@ internal class RestoreOperation : Operation
         GameConfig = gameConfig;
     }
 
-    protected override void Run()
+    public override void Run()
     {
         DeletePaths("(Step 1/2) Deleting unpacked files");
         RestoreFiles("(Step 2/2) Restoring backup files");
